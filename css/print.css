@@ -1,0 +1,146 @@
+/* 📄 Elektrik Macerası — yazdırılabilir sayfalar (çalışma kağıtları & ders planı) */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Outfit:wght@300;400;600;800&family=Caveat:wght@700&display=swap');
+
+:root {
+  --mor: #4f46e5;       /* indigo */
+  --sari: #f59e0b;      /* amber */
+  --camgobegi: #059669; /* zümrüt */
+  --pembe: #be123c;     /* gül kurusu */
+  --koyu: #0f172a;
+  --acik: #f6f5ff;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: linear-gradient(135deg, #e0e7ff 0%, #fae8ff 45%, #fef3c7 100%) fixed;
+  color: var(--koyu);
+  line-height: 1.5;
+}
+
+.sheet {
+  background: #ffffffe6;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid #6366f133;
+  max-width: 800px;
+  margin: 24px auto;
+  padding: 34px 42px;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(31, 38, 135, .12);
+}
+
+/* başlık bandı */
+.ws-header {
+  display: flex; align-items: center; gap: 16px;
+  background: linear-gradient(120deg, var(--mor), #7c3aed);
+  color: #fff; border-radius: 14px; padding: 16px 22px; margin-bottom: 8px;
+}
+.ws-header .logo { font-size: 42px; }
+.ws-header h1 { font-family: 'Cinzel', serif; font-size: 21px; line-height: 1.2; letter-spacing: .03em; }
+.ws-header p { font-size: 13px; opacity: .92; }
+
+.kimlik {
+  display: flex; gap: 18px; flex-wrap: wrap;
+  font-size: 14px; font-weight: 700; margin: 12px 0 18px;
+}
+.kimlik span { border-bottom: 2px dotted #999; min-width: 200px; padding: 2px 6px; }
+
+/* bölüm kutuları */
+.soru {
+  border: 2px solid #d9d6f2; border-radius: 12px;
+  padding: 14px 18px; margin: 14px 0;
+  page-break-inside: avoid;
+}
+.soru h3 {
+  font-size: 16px; margin-bottom: 8px; color: var(--mor);
+  display: flex; align-items: center; gap: 8px;
+}
+.soru h3 .no {
+  background: var(--sari); color: #fff; border-radius: 50%;
+  width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center;
+  font-size: 15px; flex-shrink: 0;
+}
+
+.cizgi { border-bottom: 2px dotted #b9b4e0; height: 26px; margin: 4px 0; }
+
+table.ws {
+  width: 100%; border-collapse: collapse; margin: 8px 0; font-size: 14px;
+}
+table.ws th {
+  background: var(--mor); color: #fff; padding: 7px 10px; text-align: left;
+}
+table.ws td { border: 1.5px solid #cfcaee; padding: 7px 10px; }
+table.ws tr:nth-child(even) td { background: #f4f2ff; }
+table.ws .ortala { text-align: center; }
+
+.kutu-sec { display: flex; flex-wrap: wrap; gap: 10px; margin: 8px 0; }
+.kutu-sec span {
+  border: 2px solid var(--camgobegi); border-radius: 999px;
+  padding: 4px 16px; font-size: 14px; font-weight: 700;
+}
+
+.ipucu {
+  background: #fff8e1; border-left: 5px solid var(--sari);
+  border-radius: 8px; padding: 10px 14px; font-size: 13.5px; margin: 12px 0;
+}
+.ipucu b { color: #b07c00; }
+
+.rozet-kutu {
+  text-align: center; border: 3px dashed var(--pembe); border-radius: 14px;
+  padding: 12px; margin-top: 18px; font-weight: 700; font-size: 15px;
+  page-break-inside: avoid;
+}
+
+/* cevap anahtarı */
+.cevap-anahtari {
+  background: #eafff1; border: 2px solid #2fbb5e; border-radius: 12px;
+  padding: 16px 20px; margin-top: 20px;
+  page-break-before: always;
+}
+.cevap-anahtari h2 { color: #1d8a44; font-size: 18px; margin-bottom: 8px; }
+.cevap-anahtari li { margin: 4px 0 4px 18px; font-size: 14px; }
+
+/* ders planı tabloları */
+table.plan { width: 100%; border-collapse: collapse; font-size: 13.5px; margin: 10px 0; }
+table.plan th { background: var(--camgobegi); color: #fff; padding: 8px 10px; text-align: left; }
+table.plan td { border: 1.5px solid #c4e8e6; padding: 8px 10px; vertical-align: top; }
+table.plan tr:nth-child(even) td { background: #f0fbfa; }
+
+h2.bolum {
+  margin: 26px 0 10px; font-size: 19px; color: var(--mor);
+  font-family: 'Cinzel', serif; letter-spacing: .03em;
+  border-bottom: 3px solid var(--sari); padding-bottom: 4px;
+}
+
+.el-yazisi { font-family: 'Caveat', cursive; font-size: 20px; color: #9a3412; }
+
+.etiket {
+  display: inline-block; font-size: 12px; font-weight: 800; color: #fff;
+  border-radius: 999px; padding: 2px 12px; margin: 2px 4px 2px 0;
+}
+.etiket.fen { background: var(--mor); }
+.etiket.bt  { background: var(--pembe); }
+.etiket.oyun { background: var(--camgobegi); }
+.etiket.mm  { background: var(--sari); }
+
+/* yazdırma düğmesi */
+.no-print { text-align: center; margin: 18px 0; }
+.no-print button {
+  font-family: inherit; font-weight: 800; font-size: 17px;
+  background: var(--mor); color: #fff; border: none; border-radius: 999px;
+  padding: 12px 32px; cursor: pointer; box-shadow: 0 4px 0 #3d33a3;
+}
+.no-print button:active { transform: translateY(3px); box-shadow: none; }
+.no-print a { color: var(--mor); font-weight: 700; margin: 0 10px; }
+
+.sayfa-kes { page-break-before: always; }
+
+@media print {
+  body { background: #fff; }
+  .sheet { box-shadow: none; margin: 0; max-width: 100%; border-radius: 0; padding: 10mm 12mm; }
+  .no-print { display: none !important; }
+  .ws-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  table.ws th, table.plan th, .etiket { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}

@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elektrik Macerası | Volta Şehri'ni Aydınlat</title>
+<meta name="description" content="6. sınıf Fen Bilimleri 'Elektriğin İletimi ve Direnç' ünitesi için etkileşimli macera oyunu. MakeyMakey destekli.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Outfit:wght@300;400;600;800&family=Caveat:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-card:#ffffffe6;
+  --border-glass:#6366f133;
+  --border-glass-hover:#6366f173;
+  --emerald:#059669; --emerald-light:#10b981; --emerald-dark:#047857; --emerald-glow:#05966926;
+  --gold:#c2410c; --gold-light:#ea580c; --gold-dark:#9a3412; --gold-glow:#c2410c26;
+  --rose:#be123c; --rose-glow:#be123c26;
+  --indigo:#6366f1; --indigo-dark:#4f46e5;
+  --amber:#f59e0b;
+  --text:#0f172a; --muted:#475569;
+  --radius-sm:8px; --radius-md:16px; --radius-lg:24px;
+  --trans:all .35s cubic-bezier(.25,.8,.25,1);
+  --font-main:'Outfit',sans-serif;
+  --font-accent:'Cinzel',serif;
+  --font-hand:'Caveat',cursive;
+}
+*{box-sizing:border-box;-webkit-font-smoothing:antialiased;margin:0;padding:0}
+html,body{
+  color:var(--text);font-family:var(--font-main);
+  background:linear-gradient(135deg,#e0e7ff 0%,#fae8ff 45%,#fef3c7 100%) fixed;
+  min-height:100vh;line-height:1.6;overflow-x:hidden;
+}
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:#ffffff80}
+::-webkit-scrollbar-thumb{border-radius:8px;background:#6366f133}
+
+#particleCanvas{z-index:2;pointer-events:none;width:100%;height:100%;position:fixed;top:0;left:0}
+
+/* ----- ambient blobs ----- */
+.magical-auras{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.aura-blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.5;animation:blobFloat 16s ease-in-out infinite}
+.aura-blob--indigo{width:420px;height:420px;background:#a5b4fc;top:-80px;left:-100px}
+.aura-blob--amber{width:380px;height:380px;background:#fcd34d;bottom:-60px;right:-80px;animation-delay:-5s}
+.aura-blob--rose{width:300px;height:300px;background:#fbcfe8;top:40%;left:55%;animation-delay:-10s}
+@keyframes blobFloat{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(40px,-30px) scale(1.08)}}
+
+.app-container{z-index:10;flex-direction:column;min-height:100vh;display:flex;position:relative}
+.container{width:100%;max-width:1150px;padding:0 1.5rem;margin:0 auto}
+.flex-1{flex:1}
+
+/* ----- header ----- */
+header.site{padding:1.1rem 0;justify-content:space-between;align-items:center;display:flex;gap:.8rem;flex-wrap:wrap}
+.logo{font-family:var(--font-accent);letter-spacing:.05em;font-size:1.35rem;font-weight:800;cursor:pointer;user-select:none}
+.logo span{color:var(--gold)}
+.controls-group{gap:.5rem;align-items:center;display:flex;flex-wrap:wrap}
+.energy-tracker{align-items:center;gap:.5rem;border-radius:var(--radius-sm);background:#fbbf2414;border:1px solid #fbbf2433;padding:.45rem 1rem;display:flex}
+.energy-lbl{font-size:.85rem;font-weight:600}
+.energy-bar-outer{background:#0000001a;border:1px solid #ffffff66;border-radius:6px;width:110px;height:12px;overflow:hidden}
+.energy-bar-inner{background:linear-gradient(90deg,var(--gold-dark),var(--gold-light),#fbbf24);width:0%;height:100%;box-shadow:0 0 10px var(--gold-glow);transition:width .6s ease-in-out}
+.icon-btn{border:1px solid var(--border-glass);cursor:pointer;width:42px;height:42px;color:var(--text);transition:var(--trans);background:#ffffff66;border-radius:50%;justify-content:center;align-items:center;display:flex;font-size:1.05rem}
+.icon-btn:hover{border-color:var(--emerald);color:var(--emerald);background:#fff}
+
+/* ----- glass & buttons ----- */
+.glass-panel{background:var(--bg-card);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border:1px solid var(--border-glass);border-radius:var(--radius-md);transition:var(--trans);box-shadow:0 8px 32px #1f268714}
+.glass-panel:hover{border-color:var(--border-glass-hover)}
+.btn{font-family:var(--font-main);border-radius:var(--radius-sm);cursor:pointer;transition:var(--trans);align-items:center;gap:.5rem;border:none;padding:.8rem 1.6rem;font-weight:600;font-size:1rem;text-decoration:none;display:inline-flex}
+.btn--primary{background:linear-gradient(135deg,var(--emerald),var(--emerald-dark));color:#fff;box-shadow:0 0 15px var(--emerald-glow)}
+.btn--primary:hover{box-shadow:0 0 25px var(--emerald-light);transform:translateY(-2px)}
+.btn--glow{background:linear-gradient(135deg,var(--gold-light),var(--gold));color:#fff;box-shadow:0 0 15px var(--gold-glow)}
+.btn--glow:hover{box-shadow:0 0 25px var(--gold);transform:translateY(-2px)}
+.btn--secondary{color:var(--text);background:#fffc;border:1px solid #6366f133}
+.btn--secondary:hover{border-color:var(--gold);color:var(--gold);background:#fff}
+.btn--big{font-size:1.15rem;padding:1rem 2.2rem}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+
+/* ----- screens ----- */
+.screen{opacity:0;transition:opacity .5s ease-in-out;display:none;padding-bottom:3rem}
+.screen--active{opacity:1;display:block}
+
+/* ----- hero ----- */
+.hero-grid{gap:3rem;min-height:calc(100vh - 160px);padding:2rem 0;grid-template-columns:1.1fr 1fr;align-items:center;display:grid}
+.hero-title{font-family:var(--font-accent);font-size:clamp(1.9rem,4.5vw,3rem);line-height:1.2;margin:.8rem 0}
+.hero-title em{font-style:normal;color:var(--gold)}
+.hero-subtitle{color:var(--muted);font-size:1.08rem;max-width:520px;margin-bottom:1.6rem}
+.hero-kicker{display:inline-block;background:#6366f114;border:1px solid #6366f133;color:var(--indigo-dark);border-radius:999px;padding:.3rem 1.1rem;font-weight:600;font-size:.85rem;letter-spacing:.04em}
+.volt-bubble{font-family:var(--font-hand);font-size:1.45rem;color:var(--gold-dark);margin-top:1.4rem;transform:rotate(-1.5deg)}
+.hero-vis{padding:1.4rem;text-align:center}
+.hero-vis svg{width:100%;height:auto;display:block}
+.about-section{padding:1.8rem;margin:1rem 0 3rem}
+.about-title{font-family:var(--font-accent);font-size:1.3rem;margin-bottom:1rem;color:var(--gold-dark)}
+.kaynak-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem}
+.kaynak-card{border:1px solid var(--border-glass);border-radius:var(--radius-md);padding:1.1rem 1.2rem;background:#ffffff99;text-decoration:none;color:var(--text);transition:var(--trans);display:block}
+.kaynak-card:hover{border-color:var(--gold);transform:translateY(-3px);box-shadow:0 10px 24px #c2410c14}
+.kaynak-card .ke{font-size:1.7rem}
+.kaynak-card b{display:block;margin:.2rem 0}
+.kaynak-card small{color:var(--muted);line-height:1.4;display:block}
+
+/* ----- map screen ----- */
+.map-title-box{text-align:center;margin:1.2rem 0}
+.map-title-box h2{font-family:var(--font-accent);font-size:2rem;color:var(--gold)}
+.map-title-box p{color:var(--muted)}
+.skyline{display:flex;justify-content:center;align-items:flex-end;gap:10px;margin:.6rem 0 .2rem}
+.bina{width:54px;border-radius:6px 6px 0 0;background:#334155;position:relative;transition:var(--trans);display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:8px 7px;align-content:start}
+.bina i{display:block;height:8px;border-radius:2px;background:#1e293b;transition:var(--trans)}
+.bina.lit{background:#475569;box-shadow:0 0 22px #fbbf2466}
+.bina.lit i{background:#fcd34d;box-shadow:0 0 8px #fbbf24}
+.map-container{padding:1rem;position:relative}
+.map-svg{width:100%;height:auto;display:block}
+.map-path{stroke:#9ca3af;stroke-width:3;stroke-dasharray:7 7;fill:none}
+.map-path.acik{stroke:var(--emerald-light);stroke-dasharray:none;filter:drop-shadow(0 0 4px #10b98155)}
+.tower-node{cursor:pointer}
+.tower-node .tower-circle{fill:#ffffffd9;stroke-width:3;transition:var(--trans)}
+.tower-node--locked{cursor:not-allowed;opacity:.6}
+.tower-node--locked .tower-circle{stroke:#94a3b8}
+.tower-node--active .tower-circle{stroke:var(--gold-light);animation:nodePulse 1.6s infinite}
+.tower-node--done .tower-circle{stroke:var(--emerald)}
+.tower-node:hover:not(.tower-node--locked) .tower-circle{stroke-width:5}
+@keyframes nodePulse{0%,100%{stroke-width:3}50%{stroke-width:7}}
+.tower-text{font-family:var(--font-main);font-size:14px;font-weight:600;fill:var(--text)}
+.tower-emoji{font-size:26px}
+.map-legend{display:flex;gap:1.4rem;justify-content:center;flex-wrap:wrap;margin-top:.8rem;font-size:.85rem;color:var(--muted)}
+.legend-dot{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:5px}
+.legend-dot--active{background:var(--gold-light)}
+.legend-dot--locked{background:#94a3b8}
+.legend-dot--done{background:var(--emerald)}
+.map-alt-linkler{text-align:center;margin-top:1rem}
+.map-alt-linkler button{background:none;border:none;color:var(--muted);font-family:inherit;font-size:.82rem;cursor:pointer;text-decoration:underline;margin:0 .6rem}
+
+/* ----- oyun ortak ----- */
+.oyun-baslik{text-align:center;margin:1rem 0 .4rem}
+.oyun-baslik h2{font-family:var(--font-accent);font-size:1.7rem;color:var(--gold-dark)}
+.oyun-baslik p{color:var(--muted);max-width:640px;margin:.3rem auto 0;font-size:.98rem}
+.geri-link{margin:.8rem 0 0}
+.hud{display:flex;flex-wrap:wrap;gap:.8rem;justify-content:center;margin:1rem 0}
+.stat{background:var(--bg-card);border:1px solid var(--border-glass);border-radius:var(--radius-md);padding:.5rem 1.4rem;text-align:center;min-width:104px}
+.stat .lbl{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+.stat .val{font-size:1.6rem;font-weight:800;color:var(--gold)}
+.mm-tip{margin:1rem auto;max-width:620px;background:#fdf4ff;border:1.5px dashed #d946ef88;border-radius:var(--radius-md);padding:.85rem 1.2rem;font-size:.92rem}
+.mm-tip b{color:#a21caf}
+key{display:inline-block;background:#fff;color:#222;border:1px solid #cbd5e1;border-radius:6px;padding:0 8px;font-weight:700;font-size:.82rem;box-shadow:0 2px 0 #cbd5e1;margin:0 2px}
+.center{text-align:center}
+.hidden{display:none!important}
+.pop{animation:pop .35s}
+@keyframes pop{0%{transform:scale(.5)}70%{transform:scale(1.12)}100%{transform:scale(1)}}
+.shake{animation:shake .4s}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-9px)}40%,80%{transform:translateX(9px)}}
+.confetti{position:fixed;width:11px;height:11px;z-index:98;pointer-events:none;border-radius:3px;top:-20px;animation:confettiFall linear forwards}
+@keyframes confettiFall{to{transform:translateY(110vh) rotate(720deg)}}
+
+/* ----- iletken avı ----- */
+#avMadde{margin:1.2rem auto .4rem;width:min(380px,90vw);padding:1.6rem 1.2rem;text-align:center}
+#avMadde .em{font-size:4.2rem;display:block}
+#avMadde .ad{font-size:1.7rem;font-weight:800;margin-top:.4rem}
+.av-secimler{display:flex;gap:1rem;justify-content:center;margin:1.2rem 0;flex-wrap:wrap}
+#avZamanBar{height:12px;width:min(420px,90vw);margin:0 auto;background:#e2e8f0;border-radius:999px;overflow:hidden}
+#avZamanDolgu{height:100%;width:100%;border-radius:999px;background:linear-gradient(90deg,var(--emerald-light),#fbbf24,var(--rose));transition:width .25s linear}
+#avSeri{font-size:1rem;font-weight:800;color:var(--gold-light);height:1.5rem;text-align:center}
+#avIpucu{font-size:.9rem;color:var(--muted);min-height:1.4rem;text-align:center}
+
+/* ----- devre lab ----- */
+.lab-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:1.2rem;align-items:start;margin-top:1rem}
+@media(max-width:880px){.lab-grid{grid-template-columns:1fr}.hero-grid{grid-template-columns:1fr;min-height:0}}
+.devre-panel{padding:1rem}
+.devre-panel svg{width:100%;height:auto;display:block}
+.durum-yazi{text-align:center;font-size:1rem;min-height:1.8rem;margin-top:.5rem;font-weight:600}
+.raf-panel{padding:1.1rem}
+.raf-panel h3{font-size:1.02rem;margin-bottom:.6rem}
+.raf-maddeler{display:flex;flex-wrap:wrap;gap:.45rem}
+.raf-maddeler button{font-family:inherit;font-weight:600;font-size:.83rem;background:#fff;color:var(--text);border:1.5px solid #e2e8f0;border-radius:10px;padding:.42rem .7rem;cursor:pointer;transition:var(--trans)}
+.raf-maddeler button:hover{border-color:var(--gold-light);transform:scale(1.04)}
+.raf-maddeler button.secili{border-color:var(--indigo);background:#eef2ff}
+.raf-maddeler button.oldu-iletken{border-color:var(--emerald);background:#ecfdf5}
+.raf-maddeler button.oldu-yalitkan{border-color:var(--rose);background:#fff1f2}
+table.kayit{width:100%;border-collapse:collapse;font-size:.85rem}
+table.kayit th{text-align:left;color:var(--muted);font-size:.72rem;padding:4px 8px;border-bottom:2px solid #e2e8f0;text-transform:uppercase;letter-spacing:.5px}
+table.kayit td{padding:4px 8px;border-bottom:1px solid #f1f5f9}
+
+/* ----- direnç & reosta ----- */
+.kontrol-panel{padding:1.2rem}
+.kontrol-panel label{display:block;font-weight:600;margin:.9rem 0 .2rem;font-size:.95rem}
+.kontrol-panel input[type=range]{width:100%;accent-color:var(--indigo);height:26px}
+.deger{color:var(--indigo-dark);font-weight:800}
+.cins-sec{display:flex;gap:.45rem;flex-wrap:wrap}
+.cins-sec button{font-family:inherit;font-weight:600;font-size:.85rem;background:#fff;border:1.5px solid #e2e8f0;border-radius:10px;padding:.4rem .85rem;cursor:pointer;transition:var(--trans)}
+.cins-sec button.secili{border-color:var(--indigo);background:#eef2ff}
+.bar-arka{height:16px;background:#e2e8f0;border-radius:999px;overflow:hidden}
+.bar-ic{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--emerald-light),#fbbf24,var(--rose));transition:width .3s}
+.bar-etiket{display:flex;justify-content:space-between;font-size:.72rem;color:var(--muted);margin-top:2px}
+.gorev-panel{padding:1.1rem 1.3rem;margin-top:1.1rem}
+.gorev-panel h3{font-size:1rem;margin-bottom:.4rem}
+.gorev-soru{font-size:.95rem;margin-bottom:.7rem}
+#parlaklikYazi,#reostaYazi{text-align:center;font-size:.95rem;font-weight:600;min-height:1.7rem;margin-top:.4rem}
+
+/* ----- yarışma ----- */
+.takim-sec{display:flex;gap:.9rem;justify-content:center;flex-wrap:wrap;margin:1.1rem 0}
+.takim-kart{padding:.9rem 1.2rem;width:165px;text-align:center;cursor:pointer;border:2px solid transparent;border-radius:var(--radius-md);background:var(--bg-card);box-shadow:0 8px 32px #1f268714;transition:var(--trans)}
+.takim-kart:hover{transform:scale(1.04)}
+.takim-kart.secili{border-color:var(--gold-light)}
+.takim-kart .te{font-size:2.2rem}
+.takim-kart .tus{margin-top:.3rem;font-size:.78rem;color:var(--muted)}
+.skorlar{display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap;margin:.9rem 0}
+.skor{background:var(--bg-card);border:2px solid transparent;border-radius:var(--radius-md);padding:.45rem 1.1rem;min-width:122px;text-align:center;transition:var(--trans);box-shadow:0 8px 32px #1f268714}
+.skor.buzz{border-color:var(--gold-light);transform:scale(1.08);box-shadow:0 0 22px #f59e0b55}
+.skor .ad{font-size:.85rem;font-weight:700}
+.skor .p{font-size:1.5rem;font-weight:800;color:var(--gold)}
+.soru-kart{max-width:700px;margin:.6rem auto;padding:1.4rem 1.6rem}
+.soru-kart .no{color:var(--muted);font-size:.82rem}
+.soru-kart h3{font-size:1.25rem;margin:.4rem 0 1rem;line-height:1.4}
+.secenekler{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
+@media(max-width:600px){.secenekler{grid-template-columns:1fr}}
+.secenekler button{font-family:inherit;font-weight:600;font-size:.95rem;text-align:left;background:#fff;color:var(--text);border:1.5px solid #e2e8f0;border-radius:12px;padding:.75rem .9rem;cursor:pointer;transition:var(--trans)}
+.secenekler button:hover:not(:disabled){border-color:var(--indigo);transform:scale(1.015)}
+.secenekler button.dogru{background:#ecfdf5;border-color:var(--emerald)}
+.secenekler button.yanlis{background:#fff1f2;border-color:var(--rose)}
+.secenekler button:disabled{cursor:default}
+.harf{display:inline-block;background:#eef2ff;color:var(--indigo-dark);border-radius:7px;width:26px;text-align:center;margin-right:8px;font-weight:800}
+#buzzDurum{text-align:center;font-size:1.05rem;font-weight:700;min-height:1.9rem;margin:.5rem 0}
+.podyum{display:flex;gap:.9rem;justify-content:center;align-items:flex-end;margin:1.4rem 0;flex-wrap:wrap}
+.podyum .pk{background:var(--bg-card);border:1px solid var(--border-glass);border-radius:var(--radius-md) var(--radius-md) 0 0;padding:.9rem;text-align:center;min-width:125px}
+
+/* ----- sertifika ----- */
+.sertifika{max-width:620px;margin:1.4rem auto;padding:2.4rem 2rem;text-align:center;border:2px solid #d9770655;position:relative}
+.sertifika:before{content:"";position:absolute;inset:10px;border:1px solid #d9770633;border-radius:var(--radius-sm);pointer-events:none}
+.sertifika .s-baslik{font-family:var(--font-accent);font-size:1.5rem;color:var(--gold);letter-spacing:.08em}
+.sertifika .s-isim{font-family:var(--font-hand);font-size:2.6rem;color:var(--indigo-dark);margin:.6rem 0}
+.sertifika p{color:var(--muted);font-size:.95rem}
+.cert-input{font-family:inherit;font-size:1rem;padding:.7rem 1rem;border:1.5px solid #cbd5e1;border-radius:10px;width:min(320px,80vw);text-align:center;background:#fff}
+
+footer.site{text-align:center;padding:1.4rem 0 2rem;color:var(--muted);font-size:.8rem}
+@media print{
+  .magical-auras,#particleCanvas,header.site,footer.site,.no-cert-print{display:none!important}
+  body{background:#fff}
+}
+</style>
+</head>
+<body>
+
+<canvas id="particleCanvas"></canvas>
+<div class="magical-auras">
+  <div class="aura-blob aura-blob--indigo"></div>
+  <div class="aura-blob aura-blob--amber"></div>
+  <div class="aura-blob aura-blob--rose"></div>
+</div>
+
+<div class="app-container">
+
+  <!-- ÜST BAR -->
+  <header class="site container">
+    <div class="logo" onclick="go('hero')">⚡ ELEKTRİK <span>MACERASI</span></div>
+    <div class="controls-group">
+      <div class="energy-tracker" title="Volta Şehri'nin enerjisi">
+        <span style="font-size:1.1rem">🏙️</span>
+        <span class="energy-lbl">Şehir Enerjisi:</span>
+        <div class="energy-bar-outer"><div class="energy-bar-inner" id="enerjiBar"></div></div>
+        <span style="font-size:.85rem;font-weight:700" id="enerjiYuzde">0%</span>
+      </div>
+      <button class="icon-btn" id="haritaBtn" onclick="go('map')" title="Macera Haritası">🗺️</button>
+      <button class="icon-btn" id="sesBtn" title="Sesi Aç/Kapat">🔊</button>
+    </div>
+  </header>
+
+  <main class="container flex-1">
+
+  <!-- ============ EKRAN: GİRİŞ ============ -->
+  <section class="screen screen--active" id="screen-hero">
+    <div class="hero-grid">
+      <div>
+        <span class="hero-kicker">6. SINIF FEN BİLİMLERİ • ÜNİTE 6</span>
+        <h1 class="hero-title">Volta Şehri Karanlıkta! <em>Sen Aydınlatabilirsin.</em></h1>
+        <p class="hero-subtitle">
+          Büyük fırtına Volta Şehri'nin elektriğini kesti. Baş Mühendis <b>Volt</b>'un çırağı olarak
+          5 enerji istasyonunu onarman gerekiyor: iletkenleri tanı, devreler kur, direncin sırrını çöz,
+          reostayı ayarla ve büyük sınavı geç. Her istasyon şehre <b>%20 enerji</b> kazandırır!
+        </p>
+        <button class="btn btn--primary btn--glow btn--big" onclick="go('map')">Maceraya Başla ⚡</button>
+        <div class="volt-bubble">"Unutma çırak: elektrik en kolay yoldan akar — bilgi de öyle!" — Volt 🤖</div>
+      </div>
+      <div class="hero-vis glass-panel">
+        <svg viewBox="0 0 420 300" xmlns="http://www.w3.org/2000/svg" aria-label="Karanlık şehir ve devre">
+          <!-- gökyüzü -->
+          <rect x="0" y="0" width="420" height="300" rx="14" fill="#1e1b4b"/>
+          <circle cx="355" cy="48" r="20" fill="#fef3c7" opacity=".9"/>
+          <circle cx="347" cy="44" r="18" fill="#1e1b4b"/>
+          <g fill="#fde68a">
+            <circle cx="60" cy="40" r="2"/><circle cx="120" cy="68" r="1.6"/><circle cx="210" cy="36" r="2"/>
+            <circle cx="280" cy="74" r="1.5"/><circle cx="38" cy="96" r="1.5"/><circle cx="180" cy="90" r="1.4"/>
+          </g>
+          <!-- şimşek -->
+          <path d="M 232 10 L 212 64 L 230 64 L 204 122" fill="none" stroke="#fbbf24" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity=".9">
+            <animate attributeName="opacity" values="0;.95;.1;.8;0" dur="3.4s" repeatCount="indefinite"/>
+          </path>
+          <!-- siluet -->
+          <g fill="#312e81">
+            <rect x="18" y="150" width="58" height="130"/>
+            <rect x="86" y="120" width="64" height="160"/>
+            <rect x="160" y="168" width="50" height="112"/>
+            <rect x="220" y="135" width="62" height="145"/>
+            <rect x="292" y="160" width="50" height="120"/>
+            <rect x="350" y="186" width="52" height="94"/>
+          </g>
+          <!-- pencereler -->
+          <g id="heroPencereler" fill="#475569">
+            <rect x="28" y="162" width="12" height="9" rx="2"/><rect x="52" y="162" width="12" height="9" rx="2"/>
+            <rect x="28" y="184" width="12" height="9" rx="2"/><rect x="52" y="184" width="12" height="9" rx="2"/>
+            <rect x="98" y="134" width="13" height="9" rx="2"/><rect x="124" y="134" width="13" height="9" rx="2"/>
+            <rect x="98" y="158" width="13" height="9" rx="2"/><rect x="124" y="158" width="13" height="9" rx="2"/>
+            <rect x="170" y="180" width="12" height="9" rx="2"/><rect x="190" y="180" width="12" height="9" rx="2"/>
+            <rect x="232" y="148" width="13" height="9" rx="2"/><rect x="258" y="148" width="13" height="9" rx="2"/>
+            <rect x="232" y="172" width="13" height="9" rx="2"/><rect x="258" y="172" width="13" height="9" rx="2"/>
+            <rect x="302" y="174" width="12" height="9" rx="2"/><rect x="322" y="174" width="12" height="9" rx="2"/>
+            <rect x="360" y="198" width="12" height="9" rx="2"/><rect x="382" y="198" width="12" height="9" rx="2"/>
+          </g>
+          <!-- tek yanan pencere -->
+          <rect x="124" y="158" width="13" height="9" rx="2" fill="#fde68a">
+            <animate attributeName="opacity" values="1;.4;1" dur="2.2s" repeatCount="indefinite"/>
+          </rect>
+          <text x="210" y="262" text-anchor="middle" fill="#a5b4fc" font-family="Outfit" font-size="13">İstasyonları tamamla, pencereleri aydınlat…</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="about-section glass-panel">
+      <h2 class="about-title">📚 Sınıf Materyalleri &amp; Öğretmen Köşesi</h2>
+      <div class="kaynak-grid">
+        <a class="kaynak-card" href="calisma-kagitlari/ck1-iletken-yalitkan.html">
+          <span class="ke">📋</span><b>ÇK-1: İletken mi Yalıtkan mı?</b>
+          <small>Sınıflandırma, güvenlik soruları ve evde keşif görevi. Yazdırılabilir.</small>
+        </a>
+        <a class="kaynak-card" href="calisma-kagitlari/ck2-direnc.html">
+          <span class="ke">🛣️</span><b>ÇK-2: Direnç Dedektifi</b>
+          <small>Yol–araba benzetmesi, tel karşılaştırmaları, deney tasarımı. Yazdırılabilir.</small>
+        </a>
+        <a class="kaynak-card" href="calisma-kagitlari/ck3-reosta-makeymakey.html">
+          <span class="ke">🎚️</span><b>ÇK-3: Reosta &amp; MakeyMakey Raporu</b>
+          <small>Reosta soruları + Karakalem Reosta deney raporu. Yazdırılabilir.</small>
+        </a>
+        <a class="kaynak-card" href="ogretmen/ders-plani.html">
+          <span class="ke">🗓️</span><b>Ders Planı (8 ders saati)</b>
+          <small>5E modeli, dakika dakika akış, ölçme araçları, BT işbirliği planı.</small>
+        </a>
+        <a class="kaynak-card" href="ogretmen/makey-makey.html">
+          <span class="ke">🍌</span><b>MakeyMakey Rehberi</b>
+          <small>3 performans görevi kartı, Scratch tarifleri, puanlama anahtarı.</small>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EKRAN: HARİTA ============ -->
+  <section class="screen" id="screen-map">
+    <div class="map-title-box">
+      <h2>VOLTA ŞEHRİ</h2>
+      <p>Parıldayan istasyonu seç; tamamladıkça yol açılır ve şehrin ışıkları yanar!</p>
+    </div>
+
+    <div class="skyline" id="skyline" title="Her istasyon bir mahalleyi aydınlatır">
+      <div class="bina" style="height:64px"><i></i><i></i><i></i><i></i></div>
+      <div class="bina" style="height:84px"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="bina" style="height:72px"><i></i><i></i><i></i><i></i></div>
+      <div class="bina" style="height:92px"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="bina" style="height:60px"><i></i><i></i><i></i><i></i></div>
+    </div>
+
+    <div class="map-container glass-panel">
+      <svg class="map-svg" viewBox="0 0 800 480" xmlns="http://www.w3.org/2000/svg">
+        <!-- dekor -->
+        <path d="M50,440 Q150,395 250,440 T450,440 T650,420 T800,440" fill="none" stroke="#8b5c1a14" stroke-width="3"/>
+        <path d="M0,90 Q100,140 300,90 T600,110 T800,70" fill="none" stroke="#8b5c1a14" stroke-width="3"/>
+        <path d="M 680,250 C 600,290 500,235 400,290 C 300,345 200,310 100,390" fill="none" stroke="#3b82f626" stroke-width="12" stroke-linecap="round"/>
+        <g style="pointer-events:none" fill="#ffffffbf">
+          <path d="M 60,40 q 15,-15 30,0 q 15,-15 30,0 q 10,10 0,20 l -60,0 z">
+            <animateTransform attributeName="transform" type="translate" values="0,0; 40,4; 0,0" dur="26s" repeatCount="indefinite"/>
+          </path>
+          <path d="M 560,60 q 15,-15 30,0 q 15,-15 30,0 q 10,10 0,20 l -60,0 z" opacity=".7">
+            <animateTransform attributeName="transform" type="translate" values="0,0; -50,6; 0,0" dur="32s" repeatCount="indefinite"/>
+          </path>
+        </g>
+
+        <!-- yollar -->
+        <path id="yol-1" class="map-path" d="M 120,380 L 250,210"/>
+        <path id="yol-2" class="map-path" d="M 250,210 L 400,330"/>
+        <path id="yol-3" class="map-path" d="M 400,330 L 555,170"/>
+        <path id="yol-4" class="map-path" d="M 555,170 L 685,290"/>
+
+        <!-- istasyonlar -->
+        <g class="tower-node" id="node-1" transform="translate(120,380)" onclick="istasyonAc(1)">
+          <circle class="tower-circle" r="32"/>
+          <text class="tower-emoji" text-anchor="middle" dy="9">🏹</text>
+          <text y="56" text-anchor="middle" class="tower-text">İletken Avı</text>
+        </g>
+        <g class="tower-node" id="node-2" transform="translate(250,210)" onclick="istasyonAc(2)">
+          <circle class="tower-circle" r="32"/>
+          <text class="tower-emoji" text-anchor="middle" dy="9">🔬</text>
+          <text y="56" text-anchor="middle" class="tower-text">Devre Laboratuvarı</text>
+        </g>
+        <g class="tower-node" id="node-3" transform="translate(400,330)" onclick="istasyonAc(3)">
+          <circle class="tower-circle" r="32"/>
+          <text class="tower-emoji" text-anchor="middle" dy="9">🧲</text>
+          <text y="56" text-anchor="middle" class="tower-text">Direnç Laboratuvarı</text>
+        </g>
+        <g class="tower-node" id="node-4" transform="translate(555,170)" onclick="istasyonAc(4)">
+          <circle class="tower-circle" r="32"/>
+          <text class="tower-emoji" text-anchor="middle" dy="9">🎚️</text>
+          <text y="56" text-anchor="middle" class="tower-text">Reosta Vadisi</text>
+        </g>
+        <g class="tower-node" id="node-5" transform="translate(685,290)" onclick="istasyonAc(5)">
+          <circle class="tower-circle" r="32"/>
+          <text class="tower-emoji" text-anchor="middle" dy="9">🏆</text>
+          <text y="56" text-anchor="middle" class="tower-text">Büyük Yarışma</text>
+        </g>
+      </svg>
+      <div class="map-legend">
+        <span class="legend-item"><span class="legend-dot legend-dot--active"></span>Hazır</span>
+        <span class="legend-item"><span class="legend-dot legend-dot--locked"></span>Kilitli</span>
+        <span class="legend-item"><span class="legend-dot legend-dot--done"></span>Tamamlandı ✓</span>
+      </div>
+      <div class="map-alt-linkler">
+        <button onclick="ogretmenModu()" id="ogretmenModuBtn">🔓 Öğretmen modu: tüm istasyonları aç</button>
+        <button onclick="ilerlemeSifirla()">↺ İlerlemeyi sıfırla</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EKRAN: İLETKEN AVI ============ -->
+  <section class="screen" id="screen-avci">
+    <div class="oyun-baslik">
+      <h2>🏹 1. İstasyon: İletken Avı</h2>
+      <p>Fırtına, malzeme deposunu karıştırdı! 60 saniyede maddeleri doğru ayırırsan istasyon onarılır.
+         Üst üste doğru bildikçe <b>seri bonusu</b> kazanırsın.</p>
+    </div>
+
+    <div id="avBasla" class="center">
+      <div class="mm-tip">
+        🍌 <b>MakeyMakey ile oyna:</b> Sol pede dokun = <key>◀</key> İletken,
+        sağ pede dokun = <key>▶</key> Yalıtkan. Klavyede aynı ok tuşları çalışır!
+      </div>
+      <button class="btn btn--primary btn--glow btn--big" onclick="avBasla()">🚀 Avı Başlat</button>
+      <div class="geri-link"><button class="btn btn--secondary" onclick="go('map')">🗺️ Haritaya Dön</button></div>
+    </div>
+
+    <div id="avOyun" class="hidden">
+      <div class="hud">
+        <div class="stat"><div class="lbl">Puan</div><div class="val" id="avPuan">0</div></div>
+        <div class="stat"><div class="lbl">Süre</div><div class="val" id="avSure">60</div></div>
+        <div class="stat"><div class="lbl">Doğru</div><div class="val" id="avDogru">0</div></div>
+      </div>
+      <div id="avZamanBar"><div id="avZamanDolgu"></div></div>
+      <div id="avSeri"></div>
+      <div id="avMadde" class="glass-panel">
+        <span class="em" id="avMaddeEmoji">🔌</span>
+        <span class="ad" id="avMaddeAd">Bakır Tel</span>
+      </div>
+      <div id="avIpucu"></div>
+      <div class="av-secimler">
+        <button class="btn btn--glow btn--big" onclick="avCevap(true)">⚡ İLETKEN <small>(◀)</small></button>
+        <button class="btn btn--primary btn--big" onclick="avCevap(false)">🚫 YALITKAN <small>(▶)</small></button>
+      </div>
+    </div>
+
+    <div id="avSonuc" class="hidden center">
+      <div class="glass-panel pop" style="max-width:440px;margin:1.4rem auto;padding:1.8rem">
+        <div style="font-size:3.4rem" id="avSonucEmoji">🏆</div>
+        <h3 style="font-family:var(--font-accent);font-size:1.5rem" id="avSonucBaslik">Süper!</h3>
+        <p style="font-size:1.1rem;margin:.4rem 0">Puanın: <b style="color:var(--gold);font-size:1.5rem" id="avSonucPuan">0</b></p>
+        <p style="color:var(--muted)" id="avSonucDetay"></p>
+        <p style="margin-top:.5rem;font-weight:600" id="avSonucRozet"></p>
+        <div style="margin-top:1.1rem;display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap">
+          <button class="btn btn--secondary" onclick="avBasla()">🔁 Tekrar</button>
+          <button class="btn btn--primary" onclick="go('map')">🗺️ Haritaya Dön</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EKRAN: DEVRE LAB ============ -->
+  <section class="screen" id="screen-devre">
+    <div class="oyun-baslik">
+      <h2>🔬 2. İstasyon: Devre Laboratuvarı</h2>
+      <p>1️⃣ Raftan madde seç → 2️⃣ test uçlarına yerleşsin → 3️⃣ <b>anahtarı kapat</b> → 4️⃣ ampulü gözle!
+         12 maddenin tamamını test et, istasyonu onar.</p>
+    </div>
+
+    <div class="lab-grid">
+      <div class="glass-panel devre-panel">
+        <svg viewBox="0 0 560 360" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="glow1" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#fff7c0"/>
+              <stop offset="45%" stop-color="#fbbf24"/>
+              <stop offset="100%" stop-color="#fbbf24" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <path d="M 110 300 H 60 V 90 H 240" fill="none" stroke="#b45309" stroke-width="6" stroke-linecap="round"/>
+          <path d="M 320 90 H 380" fill="none" stroke="#b45309" stroke-width="6" stroke-linecap="round"/>
+          <path d="M 440 90 H 500 V 300 H 330" fill="none" stroke="#b45309" stroke-width="6" stroke-linecap="round"/>
+          <path d="M 190 300 H 250" fill="none" stroke="#b45309" stroke-width="6" stroke-linecap="round"/>
+          <rect x="110" y="282" width="80" height="36" rx="6" fill="#4f46e5"/>
+          <rect x="104" y="290" width="8" height="20" fill="#94a3b8"/>
+          <text x="150" y="306" font-size="15" fill="#fff" text-anchor="middle" font-weight="bold">PİL ⊕</text>
+          <g id="anahtarG" style="cursor:pointer">
+            <circle cx="260" cy="300" r="6" fill="#ea580c"/>
+            <circle cx="320" cy="300" r="6" fill="#ea580c"/>
+            <line id="anahtarKol" x1="260" y1="300" x2="312" y2="266" stroke="#ea580c" stroke-width="7" stroke-linecap="round"/>
+            <text x="290" y="338" font-size="14" fill="#64748b" text-anchor="middle">ANAHTAR (tıkla)</text>
+          </g>
+          <circle id="ampulGlow" cx="410" cy="60" r="55" fill="url(#glow1)" opacity="0"/>
+          <circle id="ampulCam" cx="410" cy="60" r="28" fill="#e2e8f0" stroke="#94a3b8" stroke-width="3"/>
+          <path d="M 400 60 q 5 -12 10 0 q 5 12 10 0" stroke="#94a3b8" stroke-width="2.5" fill="none"/>
+          <rect x="398" y="86" width="24" height="14" rx="3" fill="#94a3b8"/>
+          <text x="410" y="125" font-size="14" fill="#64748b" text-anchor="middle">AMPUL</text>
+          <circle cx="240" cy="90" r="7" fill="#0d9488"/>
+          <circle cx="320" cy="90" r="7" fill="#0d9488"/>
+          <text x="280" y="135" font-size="13" fill="#0d9488" text-anchor="middle">TEST UÇLARI</text>
+          <g id="testMadde" opacity="0">
+            <rect x="246" y="73" width="68" height="34" rx="9" fill="#eef2ff" stroke="#6366f1" stroke-width="2"/>
+            <text id="testMaddeEmoji" x="280" y="98" font-size="22" text-anchor="middle">🔌</text>
+          </g>
+          <g id="elektronlar" opacity="0">
+            <circle r="5" fill="#6366f1"><animateMotion dur="2.2s" repeatCount="indefinite" path="M 110 300 H 60 V 90 H 380 H 500 V 300 H 110"/></circle>
+            <circle r="5" fill="#6366f1"><animateMotion dur="2.2s" begin="0.7s" repeatCount="indefinite" path="M 110 300 H 60 V 90 H 380 H 500 V 300 H 110"/></circle>
+            <circle r="5" fill="#6366f1"><animateMotion dur="2.2s" begin="1.4s" repeatCount="indefinite" path="M 110 300 H 60 V 90 H 380 H 500 V 300 H 110"/></circle>
+          </g>
+        </svg>
+        <div class="durum-yazi" id="devreDurum">Raftan bir madde seç 👉</div>
+      </div>
+
+      <div>
+        <div class="glass-panel raf-panel">
+          <h3>🧺 Malzeme Rafı</h3>
+          <div class="raf-maddeler" id="raf"></div>
+          <div style="font-size:.85rem;color:var(--muted);margin-top:.5rem" id="devreIlerleme"></div>
+        </div>
+        <div class="glass-panel raf-panel" style="margin-top:1rem">
+          <h3>📋 Gözlem Tablom</h3>
+          <table class="kayit">
+            <thead><tr><th>Madde</th><th>Ampul</th><th>Sonuç</th></tr></thead>
+            <tbody id="kayitGovde"></tbody>
+          </table>
+        </div>
+        <div class="geri-link center"><button class="btn btn--secondary" onclick="go('map')">🗺️ Haritaya Dön</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EKRAN: DİRENÇ LAB ============ -->
+  <section class="screen" id="screen-direnc">
+    <div class="oyun-baslik">
+      <h2>🧲 3. İstasyon: Direnç Laboratuvarı</h2>
+      <p>Telin <b>uzunluğunu</b>, <b>kalınlığını</b> ve <b>cinsini</b> değiştir; direnç çubuğunu ve ampulü izle.
+         3 mühendislik görevini tamamla, istasyon onarılsın!</p>
+    </div>
+
+    <div class="lab-grid">
+      <div class="glass-panel kontrol-panel">
+        <label>📏 Tel Uzunluğu: <span class="deger" id="uzunlukD">25 cm</span></label>
+        <input type="range" id="uzunluk" min="5" max="50" value="25">
+        <label>⭕ Dik Kesit Alanı (kalınlık): <span class="deger" id="kalinlikD">Orta</span></label>
+        <input type="range" id="kalinlik" min="1" max="3" value="2">
+        <label>🔩 Telin Cinsi:</label>
+        <div class="cins-sec" id="cinsSec"></div>
+        <label style="margin-top:1.2rem">🧲 Elektriksel Direnç</label>
+        <div class="bar-arka"><div class="bar-ic" id="direncBar" style="width:40%"></div></div>
+        <div class="bar-etiket"><span>Az direnç</span><span>Çok direnç</span></div>
+      </div>
+
+      <div class="glass-panel devre-panel">
+        <svg viewBox="0 0 560 300" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="glow2" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#fff7c0"/>
+              <stop offset="45%" stop-color="#fbbf24"/>
+              <stop offset="100%" stop-color="#fbbf24" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <path d="M 120 250 H 60 V 80 H 150" fill="none" stroke="#b45309" stroke-width="6" stroke-linecap="round"/>
+          <path d="M 410 80 H 500 V 250 H 220" fill="none" stroke="#b45309" stroke-width="6" stroke-linecap="round"/>
+          <rect x="120" y="232" width="100" height="36" rx="6" fill="#4f46e5"/>
+          <text x="170" y="256" font-size="15" fill="#fff" text-anchor="middle" font-weight="bold">PİL ⊕⊖</text>
+          <line id="tel" x1="150" y1="80" x2="330" y2="80" stroke="#d97a32" stroke-width="8" stroke-linecap="round"/>
+          <circle cx="150" cy="80" r="7" fill="#0d9488"/>
+          <circle id="telUc2" cx="330" cy="80" r="7" fill="#0d9488"/>
+          <text id="telEtiket" x="240" y="52" font-size="14" fill="#64748b" text-anchor="middle">Bakır tel • 25 cm • orta</text>
+          <circle id="ampulGlow2" cx="455" cy="160" r="62" fill="url(#glow2)" opacity=".6"/>
+          <circle id="ampulCam2" cx="455" cy="160" r="30" fill="#fbbf24" stroke="#94a3b8" stroke-width="3"/>
+          <path d="M 444 160 q 5 -13 11 0 q 5 13 11 0" stroke="#64748b" stroke-width="2.5" fill="none"/>
+          <rect x="442" y="188" width="26" height="14" rx="3" fill="#94a3b8"/>
+        </svg>
+        <div id="parlaklikYazi"></div>
+      </div>
+    </div>
+
+    <div class="glass-panel gorev-panel">
+      <h3>🎯 Mühendislik Görevleri <span style="color:var(--muted);font-size:.8rem">(3/3 tamamla → istasyon onarılır)</span></h3>
+      <div class="gorev-soru" id="gorevYazi"></div>
+      <button class="btn btn--primary" id="gorevBtn" onclick="gorevKontrol()">✅ Böyle Ayarladım, Kontrol Et!</button>
+      <span id="gorevDurum" style="margin-left:.8rem;font-weight:700"></span>
+    </div>
+    <div class="geri-link center"><button class="btn btn--secondary" onclick="go('map')">🗺️ Haritaya Dön</button></div>
+  </section>
+
+  <!-- ============ EKRAN: REOSTA ============ -->
+  <section class="screen" id="screen-reosta">
+    <div class="oyun-baslik">
+      <h2>🎚️ 4. İstasyon: Reosta Vadisi</h2>
+      <p>Reosta = <b>ayarlanabilir direnç</b>. Sürgüyü kaydır, parlaklığı izle.
+         Sonra Volt'un 3 sorusunu doğru cevapla — eski radyoların ses düğmesinin sırrı çözülsün! 📻</p>
+    </div>
+
+    <div class="glass-panel devre-panel" style="max-width:720px;margin:0 auto">
+      <svg viewBox="0 0 560 320" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="glow3" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#fff7c0"/>
+            <stop offset="45%" stop-color="#fbbf24"/>
+            <stop offset="100%" stop-color="#fbbf24" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <path d="M 130 270 H 60 V 90 H 120" fill="none" stroke="#b45309" stroke-width="6" stroke-linecap="round"/>
+        <path d="M 420 90 H 500 V 270 H 230" fill="none" stroke="#b45309" stroke-width="6" stroke-linecap="round"/>
+        <rect x="130" y="252" width="100" height="36" rx="6" fill="#4f46e5"/>
+        <text x="180" y="276" font-size="15" fill="#fff" text-anchor="middle" font-weight="bold">PİL ⊕⊖</text>
+        <rect x="120" y="74" width="200" height="32" rx="10" fill="#eef2ff" stroke="#6366f1" stroke-width="2"/>
+        <line id="reostaAktifTel" x1="120" y1="90" x2="200" y2="90" stroke="#be123c" stroke-width="6"/>
+        <line id="reostaPasifTel" x1="200" y1="90" x2="320" y2="90" stroke="#cbd5e1" stroke-width="6"/>
+        <g id="surgu">
+          <rect id="surguKutu" x="188" y="56" width="24" height="48" rx="7" fill="#ea580c"/>
+          <text x="200" y="46" font-size="13" fill="#9a3412" text-anchor="middle" font-weight="bold">SÜRGÜ</text>
+        </g>
+        <text x="120" y="130" font-size="13" fill="#0d9488" text-anchor="middle">⬅ 2 yönü</text>
+        <text x="320" y="130" font-size="13" fill="#be123c" text-anchor="middle">1 yönü ➡</text>
+        <line x1="320" y1="90" x2="420" y2="90" stroke="#b45309" stroke-width="6" stroke-linecap="round"/>
+        <circle id="ampulGlow3" cx="455" cy="180" r="62" fill="url(#glow3)" opacity=".6"/>
+        <circle id="ampulCam3" cx="455" cy="180" r="30" fill="#fbbf24" stroke="#94a3b8" stroke-width="3"/>
+        <path d="M 444 180 q 5 -13 11 0 q 5 13 11 0" stroke="#64748b" stroke-width="2.5" fill="none"/>
+        <rect x="442" y="208" width="26" height="14" rx="3" fill="#94a3b8"/>
+      </svg>
+      <label class="center" style="display:block;font-weight:600;margin-top:.5rem">🎚️ Sürgüyü kaydır:</label>
+      <input type="range" id="reosta" min="0" max="100" value="40" style="width:100%;accent-color:var(--gold-light);height:30px">
+      <div id="reostaYazi"></div>
+    </div>
+
+    <div class="glass-panel gorev-panel" style="max-width:720px;margin:1.1rem auto 0">
+      <h3>🤖 Volt Soruyor <span style="color:var(--muted);font-size:.8rem">(3 doğru → istasyon onarılır)</span></h3>
+      <div class="gorev-soru" id="reostaSoruYazi"></div>
+      <div id="reostaSecenekler" style="display:flex;gap:.6rem;flex-wrap:wrap"></div>
+      <div id="reostaSoruDurum" style="margin-top:.6rem;font-weight:700;min-height:1.6rem"></div>
+    </div>
+    <div class="geri-link center"><button class="btn btn--secondary" onclick="go('map')">🗺️ Haritaya Dön</button></div>
+  </section>
+
+  <!-- ============ EKRAN: YARIŞMA ============ -->
+  <section class="screen" id="screen-yarisma">
+    <div class="oyun-baslik">
+      <h2>🏆 5. İstasyon: Büyük Bilgi Yarışması</h2>
+      <p>Son istasyon! Takımını kur, buzzer'a bas, soruları kap. Tek başına da oynayabilirsin.</p>
+    </div>
+
+    <div id="ekranKurulum" class="center">
+      <div class="mm-tip">
+        🍌 <b>MakeyMakey buzzer kurulumu:</b> Takım pedlerini ok tuşlarına bağlayın.
+        Takım 1 = <key>◀</key> • Takım 2 = <key>▶</key> • Takım 3 = <key>▲</key> • Takım 4 = <key>▼</key>
+        — Klavyeden de aynı tuşlar çalışır.
+      </div>
+      <div class="takim-sec" id="takimSec"></div>
+      <button class="btn btn--primary btn--glow btn--big" onclick="yarismaBasla()">🚦 Yarışmayı Başlat</button>
+      <div class="geri-link"><button class="btn btn--secondary" onclick="go('map')">🗺️ Haritaya Dön</button></div>
+    </div>
+
+    <div id="ekranOyun" class="hidden">
+      <div class="skorlar" id="skorlar"></div>
+      <div id="buzzDurum"></div>
+      <div class="glass-panel soru-kart">
+        <div class="no" id="soruNo">Soru 1 / 16</div>
+        <h3 id="soruMetin"></h3>
+        <div class="secenekler" id="secenekler"></div>
+      </div>
+      <p class="center" style="color:var(--muted);font-size:.88rem;margin-top:.5rem" id="altBilgi"></p>
+    </div>
+
+    <div id="ekranSonuc" class="hidden center">
+      <h3 style="font-family:var(--font-accent);font-size:1.8rem;margin:1rem 0">🎊 Yarışma Bitti!</h3>
+      <div class="podyum" id="podyum"></div>
+      <p id="sonucMesaj" style="font-size:1.1rem;margin:.6rem 0"></p>
+      <button class="btn btn--secondary" onclick="yarismaSifirla()">🔁 Yeniden Oyna</button>
+      <button class="btn btn--primary" onclick="go('map')">🗺️ Haritaya Dön</button>
+    </div>
+  </section>
+
+  <!-- ============ EKRAN: FİNAL / SERTİFİKA ============ -->
+  <section class="screen" id="screen-final">
+    <div class="oyun-baslik">
+      <h2>🌆 Volta Şehri Yeniden Işıl Işıl!</h2>
+      <p>Tüm istasyonları onardın. Şehir sana minnettar, çırak... pardon, <b>Mühendis</b>! 🎓</p>
+    </div>
+    <div class="center no-cert-print" style="margin:.6rem 0">
+      <input class="cert-input" id="certIsim" placeholder="Adını yaz, sertifikan hazırlansın ✍️" maxlength="40">
+      <button class="btn btn--primary" onclick="sertifikaYaz()">Sertifikamı Hazırla</button>
+    </div>
+    <div class="glass-panel sertifika" id="sertifika">
+      <div style="font-size:2.4rem">⚡🏅⚡</div>
+      <div class="s-baslik">ENERJİ MÜHENDİSİ SERTİFİKASI</div>
+      <p style="margin-top:.7rem">Bu belge,</p>
+      <div class="s-isim" id="certIsimYazi">— — —</div>
+      <p>adlı kahraman öğrencinin <b>Volta Şehri</b>'nin 5 enerji istasyonunu onararak<br>
+        <b>iletkenlik, yalıtkanlık, elektriksel direnç ve reosta</b> konularında<br>
+        ustalık kazandığını onaylar.</p>
+      <p style="margin-top:1rem;font-family:var(--font-hand);font-size:1.5rem;color:var(--gold-dark)">Baş Mühendis Volt 🤖 <span id="certTarih"></span></p>
+    </div>
+    <div class="center no-cert-print">
+      <button class="btn btn--glow" onclick="window.print()">🖨️ Sertifikayı Yazdır</button>
+      <button class="btn btn--secondary" onclick="go('map')">🗺️ Haritaya Dön</button>
+    </div>
+  </section>
+
+  </main>
+
+  <footer class="site">
+    MEB 6. Sınıf Fen Bilimleri • Ünite 6: Elektriğin İletimi ve Direnç — etkileşimli destek materyali •
+    MakeyMakey görevleri için <a href="ogretmen/makey-makey.html" style="color:var(--gold)">rehbere</a> bakın 🍌
+  </footer>
+</div>
+
+<script>
+/* ================== GENEL DURUM ================== */
+const EKRANLAR = ['hero','map','avci','devre','direnc','reosta','yarisma','final'];
+let aktifEkran = 'hero';
+let sesAcik = localStorage.getItem('em2-ses') !== '0';
+
+function go(ekran) {
+  aktifEkran = ekran;
+  EKRANLAR.forEach(e => document.getElementById('screen-' + e).classList.toggle('screen--active', e === ekran));
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (ekran === 'map') haritaGuncelle();
+}
+
+function istasyonDurum(n) { return !!localStorage.getItem('em2-done-' + n); }
+function tamamlananSayisi() { let s = 0; for (let i = 1; i <= 5; i++) if (istasyonDurum(i)) s++; return s; }
+
+function istasyonTamamla(n) {
+  if (!istasyonDurum(n)) {
+    localStorage.setItem('em2-done-' + n, '1');
+    konfeti();
+  }
+  enerjiGuncelle();
+}
+
+function enerjiGuncelle() {
+  const yuzde = tamamlananSayisi() * 20;
+  document.getElementById('enerjiBar').style.width = yuzde + '%';
+  document.getElementById('enerjiYuzde').textContent = yuzde + '%';
+}
+
+const ISTASYON_EKRAN = { 1: 'avci', 2: 'devre', 3: 'direnc', 4: 'reosta', 5: 'yarisma' };
+function istasyonKilitli(n) {
+  if (localStorage.getItem('em2-ogretmen') === '1') return false;
+  if (n === 1) return false;
+  return !istasyonDurum(n - 1);
+}
+function istasyonAc(n) {
+  if (istasyonKilitli(n)) {
+    ses(180, .25, 'sawtooth', .1);
+    const node = document.getElementById('node-' + n);
+    node.classList.remove('shake'); void node.getBoundingClientRect(); node.classList.add('shake');
+    return;
+  }
+  ses(520, .08); go(ISTASYON_EKRAN[n]);
+}
+
+function haritaGuncelle() {
+  for (let i = 1; i <= 5; i++) {
+    const node = document.getElementById('node-' + i);
+    node.classList.remove('tower-node--locked', 'tower-node--active', 'tower-node--done');
+    if (istasyonDurum(i)) node.classList.add('tower-node--done');
+    else if (istasyonKilitli(i)) node.classList.add('tower-node--locked');
+    else node.classList.add('tower-node--active');
+    if (i < 5) document.getElementById('yol-' + i).classList.toggle('acik', istasyonDurum(i));
+  }
+  document.querySelectorAll('#skyline .bina').forEach((b, i) => b.classList.toggle('lit', istasyonDurum(i + 1)));
+  if (tamamlananSayisi() === 5 && !localStorage.getItem('em2-final-gosterildi')) {
+    localStorage.setItem('em2-final-gosterildi', '1');
+    setTimeout(() => go('final'), 900);
+  }
+}
+
+function ogretmenModu() {
+  const acik = localStorage.getItem('em2-ogretmen') === '1';
+  localStorage.setItem('em2-ogretmen', acik ? '0' : '1');
+  document.getElementById('ogretmenModuBtn').textContent = acik
+    ? '🔓 Öğretmen modu: tüm istasyonları aç'
+    : '🔒 Öğretmen modu açık (kapat)';
+  haritaGuncelle();
+}
+function ilerlemeSifirla() {
+  if (!confirm('Tüm ilerleme silinsin mi?')) return;
+  for (let i = 1; i <= 5; i++) localStorage.removeItem('em2-done-' + i);
+  localStorage.removeItem('em2-final-gosterildi');
+  enerjiGuncelle(); haritaGuncelle();
+}
+
+/* ================== SES & EFEKT ================== */
+let AC;
+function ses(freq, dur, type = 'sine', vol = .14) {
+  if (!sesAcik) return;
+  try {
+    AC = AC || new (window.AudioContext || window.webkitAudioContext)();
+    const o = AC.createOscillator(), g = AC.createGain();
+    o.type = type; o.frequency.value = freq;
+    g.gain.setValueAtTime(vol, AC.currentTime);
+    g.gain.exponentialRampToValueAtTime(.001, AC.currentTime + dur);
+    o.connect(g); g.connect(AC.destination);
+    o.start(); o.stop(AC.currentTime + dur);
+  } catch (e) {}
+}
+const sesDogru = () => { ses(660, .09); setTimeout(() => ses(880, .12), 90); };
+const sesYanlis = () => ses(170, .3, 'sawtooth', .11);
+
+document.getElementById('sesBtn').addEventListener('click', () => {
+  sesAcik = !sesAcik;
+  localStorage.setItem('em2-ses', sesAcik ? '1' : '0');
+  document.getElementById('sesBtn').textContent = sesAcik ? '🔊' : '🔇';
+  if (sesAcik) ses(520, .08);
+});
+document.getElementById('sesBtn').textContent = sesAcik ? '🔊' : '🔇';
+
+function konfeti() {
+  const renkler = ['#f59e0b', '#6366f1', '#059669', '#be123c', '#ea580c'];
+  for (let i = 0; i < 90; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.left = Math.random() * 100 + 'vw';
+    c.style.background = renkler[i % renkler.length];
+    c.style.animationDuration = (1.6 + Math.random() * 2) + 's';
+    c.style.animationDelay = (Math.random() * .8) + 's';
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 4500);
+  }
+}
+
+function karistir(a) {
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+/* ================== PARÇACIKLAR ================== */
+(function () {
+  const cv = document.getElementById('particleCanvas'), ctx = cv.getContext('2d');
+  let W, H, parts = [];
+  function boyut() { W = cv.width = innerWidth; H = cv.height = innerHeight; }
+  addEventListener('resize', boyut); boyut();
+  const renkler = ['#f59e0b55', '#6366f155', '#ec489955'];
+  for (let i = 0; i < 36; i++) parts.push({
+    x: Math.random() * W, y: Math.random() * H,
+    r: 1.5 + Math.random() * 2.5, hiz: .2 + Math.random() * .5,
+    renk: renkler[i % 3], sal: Math.random() * Math.PI * 2
+  });
+  (function ciz() {
+    ctx.clearRect(0, 0, W, H);
+    parts.forEach(p => {
+      p.y -= p.hiz; p.sal += .01; p.x += Math.sin(p.sal) * .3;
+      if (p.y < -10) { p.y = H + 10; p.x = Math.random() * W; }
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 7); ctx.fillStyle = p.renk; ctx.fill();
+    });
+    requestAnimationFrame(ciz);
+  })();
+})();
+
+/* ================== 1) İLETKEN AVI ================== */
+const AV_MADDELER = [
+  ['Bakır Tel', '🔌', true, 'Bakır en çok kullanılan iletkendir; kabloların içindedir.'],
+  ['Demir Vida', '🔩', true, 'Metaller katı iletkenlerdir.'],
+  ['Madeni Para', '🪙', true, 'Madeni paralar metaldir, elektriği iletir.'],
+  ['Metal Kaşık', '🥄', true, 'Metal mutfak eşyaları iletkendir.'],
+  ['Metal Ataş', '📎', true, 'Ataş metaldir; test devresinde ampulü yakar.'],
+  ['Anahtar (metal)', '🔑', true, 'Metal anahtar elektriği iletir.'],
+  ['Çelik Makas', '✂️', true, 'Makasın metal kısmı iletken, plastik sapı yalıtkandır!'],
+  ['Tuzlu Su', '🧂', true, 'Tuzlu su sıvı iletkendir.'],
+  ['Limon Suyu', '🍋', true, 'Limon suyu sıvı iletkenlere örnektir.'],
+  ['Sirke', '🍶', true, 'Sirke de sıvı iletkendir.'],
+  ['Sabunlu Su', '🫧', true, 'Sabunlu su elektriği iletir.'],
+  ['İnsan Vücudu', '🧍', true, 'Vücudumuz iletkendir — elektrikte güvenlik bu yüzden önemli!'],
+  ['Muz', '🍌', true, 'Nemli meyveler iletir — MakeyMakey piyanosunun sırrı!'],
+  ['Cam Çubuk', '🧪', false, 'Cam yalıtkandır; elektriği iletmez.'],
+  ['Porselen Fincan', '☕', false, 'Porselen yalıtkandır; elektrik direklerinde de kullanılır.'],
+  ['Plastik Cetvel', '📏', false, 'Plastik yalıtkandır; kabloların dış kılıfı bu yüzden plastiktir.'],
+  ['Tahta Çubuk', '🪵', false, 'Kuru tahta yalıtkandır.'],
+  ['Silgi', '🧊', false, 'Silgi (kauçuk) yalıtkandır.'],
+  ['Kauçuk Top', '🏀', false, 'Kauçuk yalıtkandır; teknisyen eldivenleri de kauçuktandır.'],
+  ['Yün Eldiven', '🧤', false, 'Yün yalıtkandır.'],
+  ['Mum', '🕯️', false, 'Mum yalıtkan maddelere örnektir.'],
+  ['Şekerli Su', '🍬', false, 'Dikkat! Tuzlu su iletir ama ŞEKERLİ su iletmez.'],
+  ['Kolonya', '🧴', false, 'Alkollü sıvılar (kolonya) yalıtkandır.'],
+  ['Balon', '🎈', false, 'Balon (kauçuk) yalıtkandır.'],
+  ['Sünger', '🧽', false, 'Sünger yalıtkandır.'],
+];
+let avP = 0, avD = 0, avY = 0, avS = 0, avKalan = 60, avSira = [], avIdx = 0, avTimer = null, avAktif = false;
+
+function avBasla() {
+  avP = 0; avD = 0; avY = 0; avS = 0; avKalan = 60; avIdx = 0;
+  avSira = karistir([...AV_MADDELER]);
+  document.getElementById('avBasla').classList.add('hidden');
+  document.getElementById('avSonuc').classList.add('hidden');
+  document.getElementById('avOyun').classList.remove('hidden');
+  avHud(); avGoster();
+  avAktif = true;
+  clearInterval(avTimer);
+  avTimer = setInterval(() => {
+    avKalan--;
+    document.getElementById('avSure').textContent = avKalan;
+    document.getElementById('avZamanDolgu').style.width = (avKalan / 60 * 100) + '%';
+    if (avKalan <= 0) avBitir();
+  }, 1000);
+}
+function avGoster() {
+  if (avIdx >= avSira.length) { avSira = karistir([...AV_MADDELER]); avIdx = 0; }
+  const m = avSira[avIdx], kart = document.getElementById('avMadde');
+  kart.classList.remove('pop'); void kart.offsetWidth; kart.classList.add('pop');
+  document.getElementById('avMaddeEmoji').textContent = m[1];
+  document.getElementById('avMaddeAd').textContent = m[0];
+  document.getElementById('avIpucu').textContent = '';
+}
+function avCevap(secim) {
+  if (!avAktif) return;
+  const m = avSira[avIdx];
+  if (secim === m[2]) {
+    avS++; avD++;
+    avP += 10 * Math.min(avS, 5);
+    sesDogru();
+    document.getElementById('avSeri').textContent = avS >= 2 ? `🔥 ${avS} SERİ! Puanlar x${Math.min(avS, 5)}` : '';
+  } else {
+    avS = 0; avY++;
+    sesYanlis();
+    document.getElementById('avSeri').textContent = '';
+    document.getElementById('avIpucu').textContent = '💡 ' + m[3];
+    const kart = document.getElementById('avMadde');
+    kart.classList.remove('shake'); void kart.offsetWidth; kart.classList.add('shake');
+  }
+  avIdx++; avHud(); avGoster();
+}
+function avHud() {
+  document.getElementById('avPuan').textContent = avP;
+  document.getElementById('avDogru').textContent = avD;
+}
+function avBitir() {
+  clearInterval(avTimer); avAktif = false;
+  document.getElementById('avOyun').classList.add('hidden');
+  document.getElementById('avSonuc').classList.remove('hidden');
+  document.getElementById('avSonucPuan').textContent = avP;
+  document.getElementById('avSonucDetay').textContent = `${avD} doğru, ${avY} yanlış cevapladın.`;
+  let r, e, b;
+  if (avP >= 400)      { r = '🥇 ALTIN avcı! İstasyon ışıl ışıl onarıldı!'; e = '🏆'; b = 'MUHTEŞEM!'; }
+  else if (avP >= 250) { r = '🥈 GÜMÜŞ avcı! İstasyon onarıldı!'; e = '🎉'; b = 'Harikasın!'; }
+  else if (avP >= 120) { r = '🥉 BAKIR avcı! İstasyon onarıldı!'; e = '👏'; b = 'Çok iyi!'; }
+  else                 { r = 'İstasyonu onarmak için en az 120 puan gerek. Bir tur daha! 💪'; e = '🔋'; b = 'İyi deneme!'; }
+  document.getElementById('avSonucRozet').textContent = r;
+  document.getElementById('avSonucEmoji').textContent = e;
+  document.getElementById('avSonucBaslik').textContent = b;
+  if (avP >= 120) istasyonTamamla(1);
+}
+
+/* ================== 2) DEVRE LAB ================== */
+const DL_MADDELER = [
+  ['Bakır Tel', '🔌', true], ['Demir Vida', '🔩', true], ['Metal Ataş', '📎', true],
+  ['Tuzlu Su', '🧂', true], ['Limon Suyu', '🍋', true], ['Sirke', '🍶', true],
+  ['Cam Çubuk', '🧪', false], ['Porselen Fincan', '☕', false], ['Plastik Çubuk', '🥤', false],
+  ['Tahta Çubuk', '🪵', false], ['Silgi', '🧊', false], ['Şekerli Su', '🍬', false],
+];
+let dlSecili = null, dlAnahtar = false;
+const dlTestEdilen = new Set();
+
+const raf = document.getElementById('raf');
+DL_MADDELER.forEach((m, i) => {
+  const b = document.createElement('button');
+  b.textContent = m[1] + ' ' + m[0];
+  b.id = 'madde-' + i;
+  b.onclick = () => dlSec(i);
+  raf.appendChild(b);
+});
+function dlSec(i) {
+  dlSecili = i;
+  document.querySelectorAll('.raf-maddeler button').forEach(b => b.classList.remove('secili'));
+  document.getElementById('madde-' + i).classList.add('secili');
+  document.getElementById('testMadde').setAttribute('opacity', '1');
+  document.getElementById('testMaddeEmoji').textContent = DL_MADDELER[i][1];
+  ses(440, .08);
+  dlGuncelle();
+}
+document.getElementById('anahtarG').addEventListener('click', () => {
+  dlAnahtar = !dlAnahtar;
+  const kol = document.getElementById('anahtarKol');
+  if (dlAnahtar) { kol.setAttribute('x2', 320); kol.setAttribute('y2', 300); }
+  else { kol.setAttribute('x2', 312); kol.setAttribute('y2', 266); }
+  ses(300, .06, 'square');
+  dlGuncelle();
+});
+function dlGuncelle() {
+  const glow = document.getElementById('ampulGlow'), cam = document.getElementById('ampulCam'),
+        elektronlar = document.getElementById('elektronlar'), durum = document.getElementById('devreDurum');
+  if (dlSecili === null) { durum.textContent = 'Raftan bir madde seç 👉'; return; }
+  const m = DL_MADDELER[dlSecili];
+  if (!dlAnahtar) {
+    glow.setAttribute('opacity', '0'); cam.setAttribute('fill', '#e2e8f0'); elektronlar.setAttribute('opacity', '0');
+    durum.innerHTML = `${m[1]} <b>${m[0]}</b> test uçlarında. Şimdi <b style="color:var(--gold-light)">anahtarı kapat!</b>`;
+    return;
+  }
+  if (m[2]) {
+    glow.setAttribute('opacity', '1'); cam.setAttribute('fill', '#fbbf24'); elektronlar.setAttribute('opacity', '1');
+    durum.innerHTML = `💡 Ampul yandı! <b style="color:var(--emerald)">${m[0]} İLETKEN</b> — elektrik devreyi tamamladı.`;
+    sesDogru();
+  } else {
+    glow.setAttribute('opacity', '0'); cam.setAttribute('fill', '#e2e8f0'); elektronlar.setAttribute('opacity', '0');
+    durum.innerHTML = `🌑 Ampul yanmadı. <b style="color:var(--rose)">${m[0]} YALITKAN</b> — elektriğin geçişini engelledi.`;
+    ses(180, .25, 'sawtooth', .1);
+  }
+  dlKaydet(dlSecili, m[2]);
+}
+function dlKaydet(i, iletken) {
+  if (dlTestEdilen.has(i)) return;
+  dlTestEdilen.add(i);
+  const m = DL_MADDELER[i], tr = document.createElement('tr');
+  tr.innerHTML = `<td>${m[1]} ${m[0]}</td><td>${iletken ? '💡 Yandı' : '🌑 Yanmadı'}</td>
+    <td>${iletken ? '<b style="color:var(--emerald)">İletken</b>' : '<b style="color:var(--rose)">Yalıtkan</b>'}</td>`;
+  document.getElementById('kayitGovde').appendChild(tr);
+  document.getElementById('madde-' + i).classList.add(iletken ? 'oldu-iletken' : 'oldu-yalitkan');
+  document.getElementById('devreIlerleme').textContent = `Test edilen: ${dlTestEdilen.size} / ${DL_MADDELER.length}`;
+  if (dlTestEdilen.size === DL_MADDELER.length) {
+    setTimeout(() => {
+      document.getElementById('devreDurum').innerHTML =
+        '🏅 <b style="color:var(--gold)">TEBRİKLER! 12/12 madde test edildi — istasyon onarıldı!</b>';
+      istasyonTamamla(2);
+    }, 700);
+  }
+}
+
+/* ================== 3) DİRENÇ LAB ================== */
+const CINSLER = [['Gümüş', 1.0, '#94a3b8'], ['Bakır', 1.1, '#d97a32'], ['Demir', 5.5, '#64748b'], ['Nikrom', 30, '#b08968']];
+let cins = 1;
+const cinsSec = document.getElementById('cinsSec');
+CINSLER.forEach((c, i) => {
+  const b = document.createElement('button');
+  b.textContent = c[0]; b.id = 'cins-' + i;
+  b.onclick = () => { cins = i; document.querySelectorAll('.cins-sec button').forEach(x => x.classList.remove('secili')); b.classList.add('secili'); telGuncelle(); ses(440, .06); };
+  if (i === cins) b.classList.add('secili');
+  cinsSec.appendChild(b);
+});
+const KALINLIK_AD = { 1: 'İnce', 2: 'Orta', 3: 'Kalın' };
+const uzunluk = document.getElementById('uzunluk'), kalinlik = document.getElementById('kalinlik');
+
+function direnci() { return CINSLER[cins][1] * (+uzunluk.value) / (+kalinlik.value); }
+function telGuncelle() {
+  const L = +uzunluk.value, A = +kalinlik.value;
+  document.getElementById('uzunlukD').textContent = L + ' cm';
+  document.getElementById('kalinlikD').textContent = KALINLIK_AD[A];
+  const x2 = 150 + (L / 50) * 230;
+  const tel = document.getElementById('tel');
+  tel.setAttribute('x2', x2);
+  tel.setAttribute('stroke-width', 3 + A * 3);
+  tel.setAttribute('stroke', CINSLER[cins][2]);
+  document.getElementById('telUc2').setAttribute('cx', x2);
+  document.getElementById('telEtiket').textContent = `${CINSLER[cins][0]} tel • ${L} cm • ${KALINLIK_AD[A].toLowerCase()}`;
+  const R = direnci();
+  const dirNorm = Math.min(1, Math.log10(R / 1.6) / 3);
+  document.getElementById('direncBar').style.width = (8 + dirNorm * 92) + '%';
+  const parl = 1 - dirNorm;
+  document.getElementById('ampulGlow2').setAttribute('opacity', (parl * parl).toFixed(2));
+  const renkler = ['#e2e8f0', '#fde68a', '#fcd34d', '#fbbf24'];
+  document.getElementById('ampulCam2').setAttribute('fill', renkler[Math.min(3, Math.floor(parl * 4))]);
+  const y = document.getElementById('parlaklikYazi');
+  if (parl > .75)      y.innerHTML = '🌟 Ampul <b style="color:var(--gold)">çok parlak!</b> Direnç az.';
+  else if (parl > .5)  y.innerHTML = '💡 Ampul parlak yanıyor.';
+  else if (parl > .3)  y.innerHTML = '🕯️ Ampul sönükleşti... Direnç arttı.';
+  else                 y.innerHTML = '🌑 Ampul neredeyse sönük — <b style="color:var(--rose)">direnç çok büyük!</b>';
+}
+uzunluk.addEventListener('input', telGuncelle);
+kalinlik.addEventListener('input', telGuncelle);
+
+const GOREVLER = [
+  { yazi: '1️⃣ Ampulü <b>EN PARLAK</b> yap! (İpucu: en iyi iletken cins + en kısa + en kalın tel)',
+    test: () => +uzunluk.value <= 10 && +kalinlik.value === 3 && cins === 0 },
+  { yazi: '2️⃣ Şimdi ampulü <b>EN SÖNÜK</b> yap! (Direnci olabildiğince büyüt.)',
+    test: () => +uzunluk.value >= 45 && +kalinlik.value === 1 && cins === 3 },
+  { yazi: '3️⃣ Cins <b>Bakır</b> ve kalınlık <b>Orta</b> kalsın; SADECE uzunlukla ampulü sönükleştir (uzunluk 40 cm ve üzeri).',
+    test: () => +uzunluk.value >= 40 && +kalinlik.value === 2 && cins === 1 },
+];
+let gorevIdx = 0;
+function gorevGoster() {
+  if (gorevIdx >= GOREVLER.length) {
+    document.getElementById('gorevYazi').innerHTML =
+      '🏅 <b style="color:var(--gold)">Üç görev de tamam — istasyon onarıldı!</b> Sıradaki durak: 🎚️ Reosta Vadisi.';
+    document.getElementById('gorevBtn').classList.add('hidden');
+    istasyonTamamla(3);
+    return;
+  }
+  document.getElementById('gorevYazi').innerHTML = GOREVLER[gorevIdx].yazi;
+  document.getElementById('gorevDurum').textContent = '';
+}
+function gorevKontrol() {
+  if (GOREVLER[gorevIdx].test()) {
+    document.getElementById('gorevDurum').innerHTML = '<span style="color:var(--emerald)">DOĞRU! 🎉</span>';
+    sesDogru();
+    gorevIdx++;
+    setTimeout(gorevGoster, 1100);
+  } else {
+    document.getElementById('gorevDurum').innerHTML = '<span style="color:var(--rose)">Henüz değil — ayarları yeniden düşün 🤔</span>';
+    sesYanlis();
+  }
+}
+
+/* ================== 4) REOSTA ================== */
+const reosta = document.getElementById('reosta');
+function reostaGuncelle() {
+  const v = +reosta.value;
+  const sx = 120 + (v / 100) * 200;
+  document.getElementById('surguKutu').setAttribute('x', sx - 12);
+  document.getElementById('reostaAktifTel').setAttribute('x2', sx);
+  document.getElementById('reostaPasifTel').setAttribute('x1', sx);
+  const parl = 1 - v / 100 * .92;
+  document.getElementById('ampulGlow3').setAttribute('opacity', (parl * parl).toFixed(2));
+  const renkler = ['#e2e8f0', '#fde68a', '#fcd34d', '#fbbf24'];
+  document.getElementById('ampulCam3').setAttribute('fill', renkler[Math.min(3, Math.floor(parl * 4))]);
+  const y = document.getElementById('reostaYazi');
+  if (v < 25)      y.innerHTML = '⬅ Sürgü <b style="color:#0d9488">2 yönünde</b>: devredeki tel KISA → direnç AZ → ampul <b style="color:var(--gold)">PARLAK</b> 🌟';
+  else if (v > 75) y.innerHTML = '➡ Sürgü <b style="color:var(--rose)">1 yönünde</b>: devredeki tel UZUN → direnç ÇOK → ampul <b style="color:var(--rose)">SÖNÜK</b> 🌑';
+  else             y.innerHTML = 'Sürgü ortada: orta direnç, orta parlaklık 💡 İki yöne de kaydır, farkı gör!';
+}
+reosta.addEventListener('input', reostaGuncelle);
+
+const REOSTA_SORULAR = [
+  ['Ampulün EN PARLAK yanması için sürgü hangi yönde olmalı?', ['⬅ 2 yönünde (sola)', '➡ 1 yönünde (sağa)'], 0,
+   '2 yönünde devredeki tel kısalır → direnç azalır → parlaklık artar.'],
+  ['Sürgü 1 yönüne itilirse elektriksel direnç ne olur?', ['Azalır', 'Artar'], 1,
+   '1 yönünde devreye giren tel uzar → direnç artar → ampul söner.'],
+  ['Eski radyolarda sesi kısıp açan düğmenin içinde hangi devre elemanı vardır?', ['Reosta (değişken direnç)', 'Sigorta'], 0,
+   'Reosta; radyo sesi, ısıtıcı sıcaklığı gibi ayarlarda kullanılır.'],
+];
+let rsIdx = 0, rsDogru = 0;
+function reostaSoruGoster() {
+  const kutu = document.getElementById('reostaSecenekler');
+  if (rsIdx >= REOSTA_SORULAR.length) {
+    document.getElementById('reostaSoruYazi').innerHTML = rsDogru === REOSTA_SORULAR.length
+      ? '🏅 <b style="color:var(--gold)">3/3 doğru — Reosta Vadisi onarıldı!</b> Son durak: 🏆 Büyük Yarışma.'
+      : `Skor: ${rsDogru}/3. İstasyonu onarmak için hepsini doğru cevaplamalısın.`;
+    kutu.innerHTML = rsDogru === REOSTA_SORULAR.length ? '' :
+      '<button class="btn btn--secondary" onclick="rsIdx=0;rsDogru=0;reostaSoruGoster()">🔁 Tekrar Dene</button>';
+    document.getElementById('reostaSoruDurum').textContent = '';
+    if (rsDogru === REOSTA_SORULAR.length) istasyonTamamla(4);
+    return;
+  }
+  const [soru, secenekler] = REOSTA_SORULAR[rsIdx];
+  document.getElementById('reostaSoruYazi').innerHTML = `<b>Soru ${rsIdx + 1}/3:</b> ${soru}`;
+  kutu.innerHTML = '';
+  secenekler.forEach((s, i) => {
+    const b = document.createElement('button');
+    b.className = 'btn btn--secondary'; b.textContent = s;
+    b.onclick = () => reostaCevapla(i);
+    kutu.appendChild(b);
+  });
+  document.getElementById('reostaSoruDurum').textContent = '';
+}
+function reostaCevapla(i) {
+  const [, , dogru, aciklama] = REOSTA_SORULAR[rsIdx];
+  const d = document.getElementById('reostaSoruDurum');
+  if (i === dogru) { rsDogru++; d.innerHTML = `<span style="color:var(--emerald)">DOĞRU! 🎉</span> <span style="color:var(--muted);font-weight:400">${aciklama}</span>`; sesDogru(); }
+  else { d.innerHTML = `<span style="color:var(--rose)">Olmadı.</span> <span style="color:var(--muted);font-weight:400">${aciklama}</span>`; sesYanlis(); }
+  rsIdx++;
+  setTimeout(reostaSoruGoster, 2200);
+}
+
+/* ================== 5) YARIŞMA ================== */
+const SORULAR = [
+  ['Elektrik enerjisini bir noktadan başka bir noktaya İLETEN maddelere ne ad verilir?',
+   ['Yalıtkan', 'İletken', 'Direnç', 'Reosta'], 1, 'İletken maddeler elektriğin geçişini sağlar.'],
+  ['Aşağıdakilerden hangisi KATI İLETKEN bir maddedir?',
+   ['Cam çubuk', 'Plastik kaşık', 'Bakır tel', 'Tahta çubuk'], 2, 'Bakır en yaygın kullanılan iletkendir.'],
+  ['Aşağıdaki sıvılardan hangisi YALITKANDIR?',
+   ['Tuzlu su', 'Limon suyu', 'Sirke', 'Şekerli su'], 3, 'Şekerli su ve alkollü su sıvı yalıtkanlardır.'],
+  ['Prizlerin ve fişlerin dış kısmı neden plastikten yapılır?',
+   ['Ucuz olduğu için', 'Yalıtkan olduğu ve bizi koruduğu için', 'Hafif olduğu için', 'Renkli olduğu için'], 1, 'Plastik yalıtkandır; güvenliğimizi sağlar.'],
+  ['Elektrik teknisyenleri çalışırken neden kauçuk eldiven giyer?',
+   ['Elleri üşümesin diye', 'Kauçuk iletken olduğu için', 'Kauçuk yalıtkan olduğu için', 'Güçlü görünmek için'], 2, 'Yalıtkan ekipman elektrik çarpmasına karşı korur.'],
+  ['Hava normalde yalıtkandır. Hangi durumda iletken hâle gelebilir?',
+   ['Sıcak yaz günlerinde', 'Şimşek ve yıldırım sırasında', 'Rüzgârlı havalarda', 'Gece olunca'], 1, 'Nem ve yüksek elektrik enerjisi havayı iletken yapabilir.'],
+  ['Maddelerin elektrik enerjisinin iletimine karşı gösterdiği ZORLUĞA ne denir?',
+   ['Elektriksel direnç', 'Elektriksel güç', 'İletkenlik', 'Gerilim'], 0, 'Direnç = elektriğin geçişine gösterilen zorluk.'],
+  ['Elektriksel direncin birimi nedir?',
+   ['Volt', 'Amper', 'Ohm (Ω)', 'Watt'], 2, 'Direnç birimi ohm; adını George Simon Ohm\'dan alır.'],
+  ['Cinsi ve kalınlığı aynı iki telden UZUN olanın direnci nasıldır?',
+   ['Daha küçüktür', 'Daha büyüktür', 'Aynıdır', 'Sıfırdır'], 1, 'Tel uzadıkça direnç artar — uzun ince yol gibi!'],
+  ['Cinsi ve uzunluğu aynı iki telden hangisi kullanılırsa ampul DAHA PARLAK yanar?',
+   ['İnce olan', 'Kalın olan', 'İkisi de aynı', 'Hiçbiri yanmaz'], 1, 'Kalın telin direnci küçüktür → ampul parlak yanar.'],
+  ['Aynı uzunluk ve kalınlıktaki bakır tel ile demir telden hangisi elektriği daha iyi iletir?',
+   ['Demir', 'Bakır', 'İkisi eşit', 'Hiçbiri iletmez'], 1, 'Bakırın direnci demirden küçüktür.'],
+  ['Gümüş en iyi iletkenlerden olduğu hâlde kablolarda neden genellikle bakır kullanılır?',
+   ['Gümüş elektriği iletmez', 'Gümüş çok pahalıdır', 'Bakır daha parlaktır', 'Gümüş çok ağırdır'], 1, 'Gümüş pahalı olduğu için bakır tercih edilir.'],
+  ['Devredeki direnci AYARLAMAK için kullanılan devre elemanı hangisidir?',
+   ['Anahtar', 'Duy', 'Reosta', 'Pil'], 2, 'Reosta = değişken (ayarlanabilir) direnç.'],
+  ['Reosta sürgüsü hareket ettirilip direnç ARTARSA ampul parlaklığı ne olur?',
+   ['Artar', 'Azalır', 'Değişmez', 'Ampul patlar'], 1, 'Direnç artarsa parlaklık azalır.'],
+  ['Ampulün içindeki ışık veren ince, yüksek dirençli telin adı nedir?',
+   ['Filaman', 'Duy', 'Sigorta', 'Elektrot'], 0, 'Filaman, direnci sayesinde ısınır ve ışık yayar.'],
+  ['Elektrikli ısıtıcılar elektrik enerjisini ısıya nasıl dönüştürür?',
+   ['Yalıtkan tellerle', 'Büyük dirençli tellerle', 'Mıknatısla', 'Su ile'], 1, 'Büyük dirençli teller elektrik enerjisini ısıya dönüştürür.'],
+];
+const TAKIMLAR = [
+  { ad: 'Şimşekler', e: '⚡', tusAd: '◀' },
+  { ad: 'Voltlar', e: '🔋', tusAd: '▶' },
+  { ad: 'Amperler', e: '💡', tusAd: '▲' },
+  { ad: 'Watt\'lar', e: '🔌', tusAd: '▼' },
+];
+let takimSayisi = 2, skor = [], soruIdx = 0, buzzlayan = null, cevapAcik = false, ySorular = [];
+
+const takimSecDiv = document.getElementById('takimSec');
+TAKIMLAR.forEach((t, i) => {
+  const k = document.createElement('div');
+  k.className = 'takim-kart' + (i < takimSayisi ? ' secili' : '');
+  k.innerHTML = `<div class="te">${t.e}</div><b>${t.ad}</b><div class="tus">Buzzer: <key>${t.tusAd}</key></div>`;
+  k.onclick = () => { takimSayisi = i + 1; takimKartGuncelle(); ses(440, .07); };
+  takimSecDiv.appendChild(k);
+});
+function takimKartGuncelle() {
+  document.querySelectorAll('.takim-kart').forEach((k, i) => k.classList.toggle('secili', i < takimSayisi));
+}
+function yarismaSifirla() {
+  document.getElementById('ekranSonuc').classList.add('hidden');
+  document.getElementById('ekranKurulum').classList.remove('hidden');
+}
+function yarismaBasla() {
+  skor = new Array(takimSayisi).fill(0);
+  soruIdx = 0;
+  ySorular = karistir([...SORULAR]);
+  document.getElementById('ekranKurulum').classList.add('hidden');
+  document.getElementById('ekranSonuc').classList.add('hidden');
+  document.getElementById('ekranOyun').classList.remove('hidden');
+  skorlarCiz(); soruGoster();
+}
+function skorlarCiz() {
+  const s = document.getElementById('skorlar');
+  s.innerHTML = '';
+  for (let i = 0; i < takimSayisi; i++) {
+    const t = TAKIMLAR[i];
+    s.innerHTML += `<div class="skor" id="skor-${i}"><div class="ad">${t.e} ${t.ad}</div><div class="p">${skor[i]}</div>
+      <div style="font-size:.68rem;color:var(--muted)">buzzer <key>${t.tusAd}</key></div></div>`;
+  }
+}
+function soruGoster() {
+  if (soruIdx >= ySorular.length) return yarismaBitir();
+  buzzlayan = null;
+  cevapAcik = takimSayisi === 1;
+  const [soru, secenekler] = ySorular[soruIdx];
+  document.getElementById('soruNo').textContent = `Soru ${soruIdx + 1} / ${ySorular.length}`;
+  document.getElementById('soruMetin').textContent = soru;
+  document.getElementById('buzzDurum').innerHTML = takimSayisi === 1
+    ? '🧠 Cevabı seç!'
+    : '⏳ <b>BUZZER bekleniyor…</b> İlk dokunan takım cevaplar!';
+  document.getElementById('altBilgi').textContent = '';
+  document.querySelectorAll('.skor').forEach(s => s.classList.remove('buzz'));
+  const div = document.getElementById('secenekler');
+  div.innerHTML = '';
+  ['A', 'B', 'C', 'D'].forEach((h, i) => {
+    const b = document.createElement('button');
+    b.innerHTML = `<span class="harf">${h}</span>${secenekler[i]}`;
+    b.onclick = () => yCevapla(i, b);
+    div.appendChild(b);
+  });
+}
+function buzz(takim) {
+  if (buzzlayan !== null || cevapAcik || takim >= takimSayisi) return;
+  buzzlayan = takim; cevapAcik = true;
+  const t = TAKIMLAR[takim];
+  document.getElementById('skor-' + takim).classList.add('buzz');
+  document.getElementById('buzzDurum').innerHTML = `🔔 <b style="color:var(--gold)">${t.e} ${t.ad}</b> buzz'ladı! Cevabınızı seçin!`;
+  ses(880, .15, 'square'); setTimeout(() => ses(1100, .2, 'square'), 130);
+}
+function yCevapla(i, btn) {
+  if (!cevapAcik) {
+    document.getElementById('buzzDurum').innerHTML = '✋ Önce buzzer! İlk dokunan takım cevaplayabilir.';
+    return;
+  }
+  cevapAcik = false;
+  const [, , dogru, aciklama] = ySorular[soruIdx];
+  const butonlar = document.querySelectorAll('.secenekler button');
+  butonlar.forEach(b => b.disabled = true);
+  butonlar[dogru].classList.add('dogru');
+  const puanli = buzzlayan !== null ? buzzlayan : 0;
+  if (i === dogru) {
+    skor[puanli] += 20;
+    document.getElementById('buzzDurum').innerHTML = `✅ DOĞRU! <b style="color:var(--emerald)">+20 puan</b> ${TAKIMLAR[puanli].e}`;
+    sesDogru();
+  } else {
+    btn.classList.add('yanlis');
+    skor[puanli] = Math.max(0, skor[puanli] - 10);
+    document.getElementById('buzzDurum').innerHTML = `❌ Yanlış! <b style="color:var(--rose)">-10 puan</b> 😅`;
+    sesYanlis();
+  }
+  document.getElementById('altBilgi').textContent = '💡 ' + aciklama;
+  skorlarCiz();
+  soruIdx++;
+  setTimeout(soruGoster, 2600);
+}
+function yarismaBitir() {
+  document.getElementById('ekranOyun').classList.add('hidden');
+  document.getElementById('ekranSonuc').classList.remove('hidden');
+  const siralama = skor.map((p, i) => ({ p, i })).sort((a, b) => b.p - a.p);
+  const madalya = ['🥇', '🥈', '🥉', '🎖️'];
+  const podyum = document.getElementById('podyum');
+  podyum.innerHTML = '';
+  siralama.forEach((s, rank) => {
+    const t = TAKIMLAR[s.i];
+    podyum.innerHTML += `<div class="pk" style="padding-top:${14 + rank * 8}px;min-height:${150 - rank * 22}px">
+      <div style="font-size:2.2rem">${madalya[rank]}</div><b>${t.e} ${t.ad}</b>
+      <div style="font-size:1.4rem;color:var(--gold);font-weight:800">${s.p}</div></div>`;
+  });
+  const kazanan = TAKIMLAR[siralama[0].i];
+  const basarili = takimSayisi > 1 || skor[0] >= 160;
+  document.getElementById('sonucMesaj').innerHTML = takimSayisi === 1
+    ? (skor[0] >= 160 ? '🌟 Muhteşem skor — istasyon onarıldı!' : 'İstasyonu onarmak için en az 160 puan gerek. Tekrar dene! 💪')
+    : `Şampiyon: <b style="color:var(--gold)">${kazanan.e} ${kazanan.ad}</b>! İstasyon onarıldı! 👏`;
+  if (basarili) istasyonTamamla(5);
+  konfeti();
+}
+
+/* ================== SERTİFİKA ================== */
+function sertifikaYaz() {
+  const isim = document.getElementById('certIsim').value.trim() || '— — —';
+  document.getElementById('certIsimYazi').textContent = isim;
+  localStorage.setItem('em2-isim', isim);
+  konfeti(); sesDogru();
+}
+document.getElementById('certTarih').textContent = '• ' + new Date().toLocaleDateString('tr-TR');
+if (localStorage.getItem('em2-isim')) {
+  document.getElementById('certIsimYazi').textContent = localStorage.getItem('em2-isim');
+  document.getElementById('certIsim').value = localStorage.getItem('em2-isim');
+}
+
+/* ================== KLAVYE / MAKEYMAKEY ================== */
+document.addEventListener('keydown', e => {
+  if (aktifEkran === 'avci' && avAktif) {
+    if (e.key === 'ArrowLeft') { e.preventDefault(); avCevap(true); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); avCevap(false); }
+  }
+  if (aktifEkran === 'yarisma') {
+    const map = { ArrowLeft: 0, ArrowRight: 1, ArrowUp: 2, ArrowDown: 3 };
+    if (e.key in map && !document.getElementById('ekranOyun').classList.contains('hidden')) {
+      e.preventDefault(); buzz(map[e.key]);
+    }
+  }
+});
+
+/* ================== BAŞLAT ================== */
+if (localStorage.getItem('em2-ogretmen') === '1')
+  document.getElementById('ogretmenModuBtn').textContent = '🔒 Öğretmen modu açık (kapat)';
+enerjiGuncelle();
+telGuncelle(); gorevGoster();
+reostaGuncelle(); reostaSoruGoster();
+</script>
+</body>
+</html>

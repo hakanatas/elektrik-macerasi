@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ders Planı — Elektriğin İletimi ve Direnç</title>
+<link rel="stylesheet" href="../css/print.css">
+</head>
+<body>
+
+<div class="no-print">
+  <a href="../index.html">🏠 Ana Sayfa</a>
+  <button onclick="window.print()">🖨️ Yazdır</button>
+  <a href="makey-makey.html">MakeyMakey Rehberi ➡</a>
+</div>
+
+<div class="sheet">
+  <div class="ws-header">
+    <span class="logo">🗓️⚡</span>
+    <div>
+      <h1>DERS PLANI — ELEKTRİĞİN İLETİMİ VE DİRENÇ</h1>
+      <p>"Elektrik Macerası: Volta Şehri'ni Aydınlat" temalı, oyunlaştırılmış ünite planı</p>
+    </div>
+  </div>
+
+  <h2 class="bolum">1. Genel Bilgiler</h2>
+  <table class="plan">
+    <tr><td style="width:32%"><b>Ders</b></td><td>Fen Bilimleri</td></tr>
+    <tr><td><b>Sınıf</b></td><td>6. Sınıf</td></tr>
+    <tr><td><b>Ünite</b></td><td>Ünite 6: Elektriğin İletimi ve Direnç (Bölüm 1: Elektriğin İletimi • Bölüm 2: Elektriksel Direnç ve Bağlı Olduğu Faktörler)</td></tr>
+    <tr><td><b>Süre</b></td><td>8 ders saati (2 hafta, 4+4)</td></tr>
+    <tr><td><b>İşbirliği</b></td><td>Bilişim Teknolojileri ve Yazılım dersi öğretmeni (MakeyMakey + Scratch görevleri, 3.–4. ve 7.–8. saatler BT laboratuvarında)</td></tr>
+    <tr><td><b>Tema / Anlatı</b></td><td>"Volta Şehri karanlıkta!" — Öğrenciler Baş Mühendis Volt'un çırakları olarak 5 enerji istasyonunu onarır; her istasyon şehre %20 enerji kazandırır. Sınıf panosunda şehir afişi ile ilerleme görselleştirilir; dijital karşılığı <b>Elektrik Macerası</b> uygulamasındaki enerji çubuğudur.</td></tr>
+    <tr><td><b>Yöntem &amp; Teknikler</b></td><td>5E öğrenme modeli, oyunlaştırma (rozet/enerji/yarışma), istasyon tekniği, jigsaw (uzmanlık masaları), Tahmin–Gözle–Açıkla (TGA), işbirlikli öğrenme, fiziksel programlama (MakeyMakey)</td></tr>
+    <tr><td><b>Araç–Gereç</b></td><td>Pil, pil yatağı, duy, ampul, anahtar, timsah ağızlı kablolar, bakır/demir/nikrom teller, beherglas, tuzlu–şekerli su, test maddeleri (cam, plastik, tahta, porselen, metal); MakeyMakey kitleri (2-4 adet), bilgisayar/projeksiyon, alüminyum folyo, oyun hamuru, muz 🍌, koyu kurşun kalem (6B-8B); <b>Elektrik Macerası</b> web uygulaması ve ÇK-1/2/3</td></tr>
+  </table>
+
+  <h2 class="bolum">2. Kazanımlar / Öğrenme Çıktıları</h2>
+  <table class="plan">
+    <tr><th style="width:12%">Kod</th><th>Çıktı</th></tr>
+    <tr><td>F1</td><td>Maddeleri elektriği iletme durumlarına göre <b>iletken–yalıtkan</b> olarak sınıflandırır ve bunu gösteren deney yapar.</td></tr>
+    <tr><td>F2</td><td>İletken–yalıtkan kullanımını günlük yaşam ve <b>güvenlik</b> bağlamında örneklendirir (priz, kablo, teknisyen ekipmanları).</td></tr>
+    <tr><td>F3</td><td><b>Elektriksel direnci</b> tanımlar; ampul parlaklığının bağlı olduğu değişkenleri (telin uzunluğu, dik kesit alanı, cinsi) deneyle belirler.</td></tr>
+    <tr><td>F4</td><td><b>Ayarlanabilir direncin (reosta)</b> ampul parlaklığına etkisi hakkında bilimsel çıkarım yapar.</td></tr>
+    <tr><td>BT1</td><td>MakeyMakey ile basit bir elektrik devresi içeren <b>fiziksel arayüz</b> kurar; girdi-çıktı ilişkisini açıklar.</td></tr>
+    <tr><td>BT2</td><td>Scratch'te hazır bir projeyi çalıştırır, basit blok değişiklikleri yapar (ses, görünüm).</td></tr>
+    <tr><td>SD1</td><td>Grup içinde görev sorumluluğu alır; tahmin–gözlem–açıklama döngüsüyle bilimsel süreç becerilerini kullanır.</td></tr>
+  </table>
+
+  <h2 class="bolum">3. Ders Akışı — 1. Hafta: Elektriğin İletimi</h2>
+
+  <table class="plan">
+    <tr><th colspan="2">1.–2. DERS SAATİ: "Şehir Karanlıkta!" — İletkenler ve Yalıtkanlar
+      <br><span class="etiket fen">Fen sınıfı</span><span class="etiket oyun">İletken Avı + Devre Lab</span></th></tr>
+    <tr><td style="width:22%"><b>Giriş (Engage) • 10'</b></td>
+      <td>Sınıf ışıkları kapatılır, projeksiyonda <b>Elektrik Macerası</b> giriş ekranı açılır: "Volta Şehri karanlıkta!"
+      Beyin fırtınası: "Elektrik olmasaydı bu sabah neler değişirdi?" Anahtar kapalıyken ampul neden yanmayabilir? (Ön bilgi: devre elemanları.)</td></tr>
+    <tr><td><b>Keşfet (Explore) • 40'</b></td>
+      <td>2-3 kişilik gruplar; görev dağılımı (devre kuran / madde yerleştiren / çalıştıran — kitaptaki Etkinlik İstasyonu-2).
+      Test devresi kurulur; bakır tel, vida, cam çubuk, plastik, tahta, porselen + tuzlu/şekerli su test edilir, tabloya işlenir.
+      Erken bitiren gruplar akıllı tahtada <b>Devre Laboratuvarı</b> oyununda 12 sanal maddeyi test eder.</td></tr>
+    <tr><td><b>Açıkla (Explain) • 15'</b></td>
+      <td>İletken/yalıtkan tanımları öğrencilerin gözlem tablolarından çıkarılır. Katı–sıvı iletken/yalıtkan örnekleri sınıflandırılır. Şaşırtmaca vurgusu: tuzlu su iletir, ŞEKERLİ su iletmez!</td></tr>
+    <tr><td><b>Derinleştir (Elaborate) • 10'</b></td>
+      <td>Güvenlik köprüsü: priz-fiş-kablo görselleri, teknisyen ekipmanları, yıldırımda havanın iletkenleşmesi. "Vücudumuz iletken mi?" sorusu MakeyMakey gününe merak tohumu olarak bırakılır. 🍌</td></tr>
+    <tr><td><b>Değerlendir (Evaluate) • 5'</b></td>
+      <td><b>İletken Avı</b> turnuvası başlatılır (akıllı tahtada gönüllü 2 öğrenci, ok tuşlarıyla). <b>ÇK-1</b> dağıtılır (5. soru = evde keşif ödevi).</td></tr>
+  </table>
+
+  <table class="plan">
+    <tr><th colspan="2">3.–4. DERS SAATİ: "MakeyMakey Günü I" — Muz Piyanosu &amp; İletken Dedektifi
+      <br><span class="etiket bt">BT laboratuvarı</span><span class="etiket mm">MakeyMakey Görev 1</span><span class="etiket fen">Fen + BT ortak</span></th></tr>
+    <tr><td style="width:22%"><b>Giriş • 5'</b></td>
+      <td>Fen öğretmeni sınıfa girer ve <b>muzdan piyano çalar</b>. 🎹🍌 Soru: "Bu nasıl mümkün?" (Cevap derste keşfedilecek; doğrudan açıklanmaz.)</td></tr>
+    <tr><td><b>BT öğretmeni • 15'</b></td>
+      <td>MakeyMakey tanıtımı: kart = devre tamamlayıcı; EARTH (toprak) + tuş pedleri; bilgisayar onu klavye sanır. Scratch arayüzüne 10 dakikalık bakış: "tuşuna basılınca → ses çal" blokları.</td></tr>
+    <tr><td><b>Görev 1 • 35'</b></td>
+      <td><b>İletken Dedektifi:</b> Gruplar MakeyMakey ile sınıftaki 10 nesneyi test eder (ÇK-1'deki tahmin-test tablosu mantığı): ses çalıyorsa iletken! Muz, ataş, kalem grafiti, silgi, cetvel, su… Ardından <b>insan zinciri</b>: 5-6 öğrenci el ele tutuşur, zincir devreyi tamamlar → vücudun iletkenliği somutlaşır.</td></tr>
+    <tr><td><b>Açıkla + Değerlendir • 25'</b></td>
+      <td>"MakeyMakey neden muzla çalıştı, silgiyle çalışmadı?" tartışması; iletken-yalıtkan kavramlarıyla açıklama (F1-F2-BT1). Gruplar bulgularını 2'şer cümleyle sunar. İsteyen gruplar muz piyanosunda beste yapar 🎵. Ev bağlantısı: Elektrik Macerası'nda 1. ve 2. istasyonu onarma.</td></tr>
+  </table>
+
+  <h2 class="bolum">4. Ders Akışı — 2. Hafta: Elektriksel Direnç</h2>
+
+  <table class="plan">
+    <tr><th colspan="2">5.–6. DERS SAATİ: "Direnç Dedektifleri" — Parlaklığın Sırrı
+      <br><span class="etiket fen">Fen sınıfı</span><span class="etiket oyun">Direnç Laboratuvarı</span></th></tr>
+    <tr><td style="width:22%"><b>Giriş • 10'</b></td>
+      <td>Yol–araba benzetmesi (kitaptaki Etkinlik İstasyonu-5): uzun/kısa, dar/geniş, asfalt/toprak yol görselleri. "Arabalar hangi yolda zorlanır?" → elektronlar–tel ilişkisine köprü.</td></tr>
+    <tr><td><b>Keşfet • 40'</b></td>
+      <td><b>Jigsaw uzmanlık masaları:</b> 3 masa — telin uzunluğu / dik kesit alanı / cinsi. Her masada TGA: önce tahmin yazılır, test devresinde farklı teller denenir, gözlem tabloya işlenir. Uzmanlar gruplarına dönüp öğretir.</td></tr>
+    <tr><td><b>Açıkla • 15'</b></td>
+      <td>Direnç tanımı + ohm (Ω) birimi + George Simon Ohm. Üç değişkenin etkisi öğrenci cümleleriyle tahtaya yazılır: uzunluk ↑ direnç ↑ • kesit ↑ direnç ↓ • cins değişirse direnç değişir. Filaman ve Edison'un bambu filamanı anlatılır.</td></tr>
+    <tr><td><b>Derinleştir + Değerlendir • 15'</b></td>
+      <td>Akıllı tahtada <b>Direnç Laboratuvarı</b>: 3 mühendislik görevi sınıfça çözülür ("ampulü en parlak yap!"). Neden kablolar gümüş değil bakır? (maliyet). <b>ÇK-2</b> dağıtılır.</td></tr>
+  </table>
+
+  <table class="plan">
+    <tr><th colspan="2">7.–8. DERS SAATİ: "MakeyMakey Günü II" — Karakalem Reosta &amp; Büyük Yarışma
+      <br><span class="etiket bt">BT laboratuvarı</span><span class="etiket mm">MakeyMakey Görev 2-3</span><span class="etiket oyun">Reosta Vadisi + Bilgi Yarışması</span></th></tr>
+    <tr><td style="width:22%"><b>Giriş • 5'</b></td>
+      <td>Dimmer'lı lamba (veya video): ışık düğmeyle nasıl loşlaşıyor? Reosta kavramı sezdirilir; <b>Reosta Vadisi</b> simülasyonunda sürgü canlı oynatılır.</td></tr>
+    <tr><td><b>Görev 2 • 30'</b></td>
+      <td><b>Karakalem Reosta:</b> Gruplar 6B-8B kalemle kalın/ince, kısa/uzun grafit çizgiler çizer; MakeyMakey bağlanır.
+      Kısa-kalın çizgi → ses çalışır (direnç az), uzun-ince → çalışmaz/zayıf (direnç çok). Parmak çizgide kaydırılarak "canlı reosta" yapılır.
+      <b>ÇK-3'teki deney raporu</b> (tahmin-gözlem-açıklama) eş zamanlı doldurulur. (F3, F4, BT1)</td></tr>
+    <tr><td><b>Açıkla • 10'</b></td>
+      <td>Reosta–karakalem bağlantısı kurulur: sürgü = parmak. Günlük hayat örnekleri: radyo sesi, ütü/fırın sıcaklık ayarı, saç kurutma kademesi.</td></tr>
+    <tr><td><b>Değerlendir • 30'</b></td>
+      <td><b>BÜYÜK BİLGİ YARIŞMASI</b> 🏆: Sınıf 4 takıma ayrılır. Folyo + oyun hamurundan yapılmış MakeyMakey buzzer pedleri ok tuşlarına bağlanır; uygulamadaki yarışma modu projeksiyonda açılır. 16 soru, buzzer'a ilk basan takım cevaplar (+20/−10). Kupa töreni + sertifika ekranı!</td></tr>
+    <tr><td><b>Kapanış • 5'</b></td>
+      <td>Volta Şehri'nin tüm ışıkları yanar 🌆 — sınıf panosundaki afiş tamamlanır. Öğrenciler ÇK-3'teki öz değerlendirme tablosunu işaretler.</td></tr>
+  </table>
+
+  <h2 class="bolum">5. Ölçme ve Değerlendirme</h2>
+  <table class="plan">
+    <tr><th>Araç</th><th>Ne ölçer?</th><th>Tür</th></tr>
+    <tr><td>ÇK-1 / ÇK-2 / ÇK-3 (cevap anahtarlı)</td><td>F1–F4 kavramsal öğrenme</td><td>Biçimlendirici</td></tr>
+    <tr><td>Oyun içi başarılar (5 istasyon, enerji %'si, yarışma skoru)</td><td>Kavram pekiştirme + motivasyon takibi</td><td>Biçimlendirici / oyunlaştırılmış</td></tr>
+    <tr><td>MakeyMakey performans görevi rubriği (rehberde)</td><td>BT1, BT2, SD1 + F kavramlarını uygulamaya aktarma</td><td>Performans değerlendirme</td></tr>
+    <tr><td>ÇK-3 öz değerlendirme tablosu</td><td>İşbirliği ve öz farkındalık</td><td>Öz değerlendirme</td></tr>
+    <tr><td>Ders kitabı Bölüm/Ünite Sonu İstasyonları</td><td>Ünite geneli</td><td>Düzey belirleyici</td></tr>
+  </table>
+
+  <h2 class="bolum">6. Farklılaştırma ve Olası Sorunlar</h2>
+  <table class="plan">
+    <tr><td style="width:30%"><b>İleri öğrenciler</b></td><td>Scratch projesinde blokları değiştirir (yeni sesler, skor ekleme); Karakalem Reosta'da çizgi kalınlığı-uzunluk değişkenlerini sistematik test edip mini grafik çizer; yarışma sorusu yazar.</td></tr>
+    <tr><td><b>Destek gereken öğrenciler</b></td><td>Eşli çalışma (akran desteği); görev kartlarında görsel adımlar; oyunlarda süre baskısı olmayan Devre Lab ile başlama; sözel yanıt yerine işaretleme.</td></tr>
+    <tr><td><b>MakeyMakey sayısı az ise</b></td><td>İstasyon dönüşümü: bir grup MakeyMakey'de, diğerleri uygulamadaki oyunlarda/ÇK'larda; 10 dakikada rotasyon.</td></tr>
+    <tr><td><b>İnternet yoksa</b></td><td>Uygulama tamamen çevrim dışı çalışır (dosyayı açmak yeterli); yalnızca Google Fonts yüklenmez, görünüm sade kalır. Scratch için çevrim dışı sürüm önceden kurulmalı.</td></tr>
+    <tr><td><b>Güvenlik</b></td><td>Tüm deneyler pil (düşük gerilim) iledir; şehir şebekesiyle ASLA deney yapılmaz — bu kural ders başında sözleşme olarak imzalatılır. Sıvı deneylerinde bilgisayardan uzak masa kullanılır.</td></tr>
+  </table>
+
+  <h2 class="bolum">7. Bağlantı Kurulan Materyaller</h2>
+  <table class="plan">
+    <tr><td>🎮 Elektrik Macerası uygulaması</td><td>index.html — 5 istasyonlu macera haritası (öğretmen modu: haritadaki "tüm istasyonları aç")</td></tr>
+    <tr><td>📄 Çalışma kağıtları</td><td>ÇK-1 (iletken/yalıtkan), ÇK-2 (direnç), ÇK-3 (reosta + MakeyMakey raporu) — hepsi cevap anahtarlı</td></tr>
+    <tr><td>🍌 MakeyMakey Rehberi</td><td>3 görev kartı, Scratch tarifleri, malzeme listesi, rubrik, sorun giderme</td></tr>
+  </table>
+
+  <p class="el-yazisi" style="margin-top:18px;">"Çıraklarım hazır — şimdi Volta Şehri'ni birlikte aydınlatalım!" — Volt 🤖⚡</p>
+</div>
+
+</body>
+</html>
