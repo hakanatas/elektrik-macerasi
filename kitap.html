@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📖 Sigorta Attı, Mahalle Karıştı! — Elektrik Macerası</title>
+<meta name="description" content="6. sınıf elektrik ünitesine eşlik eden neşeli bir hikâye: bir yaz, bir dede, bir dükkân ve kaçak elektronlar.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Outfit:wght@300;400;600;800&family=Caveat:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-card:#ffffffe6;
+  --border-glass:#6366f133;
+  --emerald:#059669; --emerald-dark:#047857;
+  --gold:#c2410c; --gold-light:#ea580c; --gold-dark:#9a3412;
+  --rose:#be123c; --indigo:#6366f1; --indigo-dark:#4f46e5;
+  --text:#0f172a; --muted:#475569;
+  --radius-sm:8px; --radius-md:16px; --radius-lg:24px;
+  --trans:all .35s cubic-bezier(.25,.8,.25,1);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased}
+html,body{
+  color:var(--text);font-family:'Outfit',sans-serif;
+  background:linear-gradient(135deg,#e0e7ff 0%,#fae8ff 45%,#fef3c7 100%) fixed;
+  min-height:100vh;line-height:1.65;overflow-x:hidden;
+}
+.magical-auras{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.aura-blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.5;animation:blobFloat 16s ease-in-out infinite}
+.aura-blob--indigo{width:420px;height:420px;background:#a5b4fc;top:-80px;left:-100px}
+.aura-blob--amber{width:380px;height:380px;background:#fcd34d;bottom:-60px;right:-80px;animation-delay:-5s}
+.aura-blob--rose{width:300px;height:300px;background:#fbcfe8;top:40%;left:55%;animation-delay:-10s}
+@keyframes blobFloat{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(40px,-30px) scale(1.08)}}
+
+.app{position:relative;z-index:10;max-width:880px;margin:0 auto;padding:0 1.2rem 4rem}
+header.site{display:flex;justify-content:space-between;align-items:center;gap:.8rem;padding:1.1rem 0;flex-wrap:wrap}
+.logo{font-family:'Cinzel',serif;font-weight:800;font-size:1.2rem;letter-spacing:.05em;text-decoration:none;color:var(--text)}
+.logo span{color:var(--gold)}
+.btn{font-family:'Outfit',sans-serif;border-radius:var(--radius-sm);cursor:pointer;transition:var(--trans);align-items:center;gap:.5rem;border:none;padding:.75rem 1.5rem;font-weight:600;font-size:1rem;text-decoration:none;display:inline-flex}
+.btn--primary{background:linear-gradient(135deg,var(--emerald),var(--emerald-dark));color:#fff;box-shadow:0 0 15px #05966926}
+.btn--primary:hover{box-shadow:0 0 25px #10b981;transform:translateY(-2px)}
+.btn--glow{background:linear-gradient(135deg,var(--gold-light),var(--gold));color:#fff;box-shadow:0 0 15px #c2410c26}
+.btn--glow:hover{box-shadow:0 0 25px var(--gold);transform:translateY(-2px)}
+.btn--secondary{color:var(--text);background:#fffc;border:1px solid #6366f133}
+.btn--secondary:hover{border-color:var(--gold);color:var(--gold);background:#fff}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.glass{background:var(--bg-card);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border:1px solid var(--border-glass);border-radius:var(--radius-md);box-shadow:0 8px 32px #1f268714}
+
+/* kapak */
+.kapak{text-align:center;padding:2.6rem 2rem;margin-top:1rem}
+.kapak .k-amblem{font-size:4rem;animation:sallan 3.5s ease-in-out infinite;display:inline-block}
+@keyframes sallan{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+.kapak h1{font-family:'Cinzel',serif;font-size:clamp(1.7rem,5vw,2.7rem);color:var(--gold);line-height:1.25;margin:.6rem 0 .2rem}
+.kapak .alt{font-family:'Caveat',cursive;font-size:1.6rem;color:var(--indigo-dark)}
+.kapak p.tanitim{color:var(--muted);max-width:560px;margin:1rem auto;font-size:1.02rem}
+.kapak .ozellik{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;margin:1rem 0}
+.kapak .ozellik span{background:#6366f114;border:1px solid #6366f133;color:var(--indigo-dark);border-radius:999px;padding:.25rem 1rem;font-size:.83rem;font-weight:600}
+
+/* içindekiler */
+.icindekiler{margin:1.4rem 0;padding:1.4rem 1.6rem}
+.icindekiler h2{font-family:'Cinzel',serif;font-size:1.2rem;color:var(--gold-dark);margin-bottom:.8rem}
+.icindekiler .bolumler{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:.6rem}
+.icindekiler button{font-family:inherit;text-align:left;background:#fff;border:1.5px solid #e2e8f0;border-radius:12px;padding:.65rem .9rem;cursor:pointer;font-size:.92rem;font-weight:600;color:var(--text);transition:var(--trans);display:flex;align-items:center;gap:.55rem}
+.icindekiler button:hover{border-color:var(--gold-light);transform:translateY(-2px)}
+.icindekiler button.okundu{border-color:var(--emerald);background:#ecfdf5}
+.icindekiler button .b-em{font-size:1.3rem}
+
+/* okuyucu */
+.okuyucu{display:none}
+.okuyucu.acik{display:block}
+.okuma-bar{display:flex;align-items:center;gap:.8rem;margin:.8rem 0}
+.okuma-bar .ilerleme{flex:1;height:10px;background:#e2e8f0;border-radius:999px;overflow:hidden}
+.okuma-bar .ilerleme i{display:block;height:100%;background:linear-gradient(90deg,var(--gold-dark),var(--gold-light),#fbbf24);border-radius:999px;transition:width .4s}
+.okuma-bar .sayac{font-size:.85rem;color:var(--muted);font-weight:600;white-space:nowrap}
+.sayfa{padding:2rem 2.2rem;animation:sayfaGel .45s ease}
+@keyframes sayfaGel{from{opacity:0;transform:translateX(26px) rotate(.4deg)}to{opacity:1;transform:none}}
+.sayfa.geri{animation:sayfaGelGeri .45s ease}
+@keyframes sayfaGelGeri{from{opacity:0;transform:translateX(-26px) rotate(-.4deg)}to{opacity:1;transform:none}}
+.sayfa .b-gorsel{text-align:center;font-size:3.2rem;margin-bottom:.3rem}
+.sayfa h2{font-family:'Cinzel',serif;font-size:1.45rem;color:var(--gold);text-align:center;margin-bottom:1.1rem}
+.sayfa .metin p{margin:.85rem 0;font-size:1.04rem}
+.sayfa .metin .konusma{margin:.85rem 0 .85rem 1rem;padding-left:.9rem;border-left:3px solid #fcd34d;font-size:1.04rem}
+.sayfa .metin .liste{margin:.85rem 0 .85rem 1.4rem}
+.sayfa .metin .liste li{margin:.35rem 0;font-size:1.02rem}
+.sayfa .metin .fisilti{font-family:'Caveat',cursive;font-size:1.4rem;color:var(--gold-dark);transform:rotate(-.6deg);display:block;margin:.9rem 0}
+.kenar-notu{background:#eef2ff;border:1.5px dashed var(--indigo);border-radius:var(--radius-md);padding:.9rem 1.2rem;margin:1.4rem 0 .9rem;font-size:.95rem}
+.kenar-notu b{color:var(--indigo-dark)}
+.sira-sende{background:#fffbeb;border:1.5px dashed #f59e0b;border-radius:var(--radius-md);padding:.9rem 1.2rem;font-size:.95rem}
+.sira-sende b{color:var(--gold-dark)}
+.sira-sende .cevap{display:none;margin-top:.6rem;padding-top:.6rem;border-top:1px dashed #f59e0b88;color:var(--emerald-dark);font-weight:600}
+.sira-sende .cevap.goster{display:block}
+.sira-sende button{margin-top:.6rem}
+.sayfa-nav{display:flex;justify-content:space-between;align-items:center;gap:.8rem;margin-top:1.2rem;flex-wrap:wrap}
+.sayfa-nav .orta{font-family:'Caveat',cursive;font-size:1.25rem;color:var(--muted)}
+
+/* bitiş */
+.bitis{text-align:center;padding:2.2rem}
+.bitis h2{font-family:'Cinzel',serif;color:var(--gold);font-size:1.6rem;margin:.6rem 0}
+.confetti{position:fixed;width:11px;height:11px;z-index:98;pointer-events:none;border-radius:3px;top:-20px;animation:confettiFall linear forwards}
+@keyframes confettiFall{to{transform:translateY(110vh) rotate(720deg)}}
+
+footer.site{text-align:center;padding:1.6rem 0 0;color:var(--muted);font-size:.8rem}
+@media(max-width:600px){.sayfa{padding:1.4rem 1.1rem}.kapak{padding:1.8rem 1.1rem}}
+@media print{.magical-auras,header.site,.okuma-bar,.sayfa-nav,footer.site{display:none!important}body{background:#fff}}
+</style>
+</head>
+<body>
+<div class="magical-auras">
+  <div class="aura-blob aura-blob--indigo"></div>
+  <div class="aura-blob aura-blob--amber"></div>
+  <div class="aura-blob aura-blob--rose"></div>
+</div>
+
+<div class="app">
+  <header class="site">
+    <a class="logo" href="index.html">⚡ ELEKTRİK <span>MACERASI</span></a>
+    <a class="btn btn--secondary" href="index.html">🗺️ Maceraya Dön</a>
+  </header>
+
+  <!-- KAPAK -->
+  <section id="kapak">
+    <div class="glass kapak">
+      <span class="k-amblem">🔌🍌</span>
+      <h1>SİGORTA ATTI,<br>MAHALLE KARIŞTI!</h1>
+      <div class="alt">Bir yaz, bir dede, bir dükkân ve kaçak elektronlar…</div>
+      <p class="tanitim">
+        Anlatan: <b>Fıstık</b> (gerçek adı Faruk ama kimse kullanmıyor).
+        Bu kitapta bir elektrik kesintisinin sırrını çözeceğiz. Yolda kaşıklar test edilecek,
+        limonatalar fiziğe kurban gidecek, bir radyonun ses düğmesi sökülecek ve bir muz —
+        evet, bir muz — piyanoya dönüşecek. Hazırsan çayını al, ışığı aç. (Açabiliyorsan tabii.)
+      </p>
+      <div class="ozellik">
+        <span>📖 8 kısa bölüm</span><span>🧲 Ünite kavramlarıyla dolu</span><span>😄 Bol kahkahalı</span><span>🍌 MakeyMakey sürprizli</span>
+      </div>
+      <button class="btn btn--primary btn--glow" style="font-size:1.1rem;padding:.95rem 2rem" onclick="bolumAc(0)">Okumaya Başla 📖</button>
+      <span id="kaldigiYer"></span>
+    </div>
+
+    <div class="glass icindekiler">
+      <h2>İçindekiler</h2>
+      <div class="bolumler" id="icindekilerListe"></div>
+    </div>
+  </section>
+
+  <!-- OKUYUCU -->
+  <section class="okuyucu" id="okuyucu">
+    <div class="okuma-bar">
+      <button class="btn btn--secondary" onclick="kapagaDon()">📕 Kapak</button>
+      <div class="ilerleme"><i id="okumaIlerleme"></i></div>
+      <span class="sayac" id="okumaSayac">Bölüm 1/8</span>
+    </div>
+    <div class="glass sayfa" id="sayfa"></div>
+    <div class="sayfa-nav">
+      <button class="btn btn--secondary" id="oncekiBtn" onclick="bolumDegistir(-1)">◀ Önceki Bölüm</button>
+      <span class="orta">— sayfaları ok tuşlarıyla da çevirebilirsin —</span>
+      <button class="btn btn--glow" id="sonrakiBtn" onclick="bolumDegistir(1)">Sonraki Bölüm ▶</button>
+    </div>
+  </section>
+
+  <footer class="site">
+    "Sigorta Attı, Mahalle Karıştı!" — Elektrik Macerası için yazılmış özgün bir hikâyedir •
+    6. Sınıf Fen Bilimleri, Ünite 6 ile uyumludur ⚡
+  </footer>
+</div>
+
+<script>
+const BOLUMLER = [
+{
+em:'🧳', baslik:'1. Yaz Tatili Diye Buna Denir (Denmez)',
+metin:`
+<p>Her şey, annemin o meşhur cümlesiyle başladı: "Fıstık, bu yaz dedende kalıyorsun." Annem bunu öyle bir söyledi ki sanki bana Disneyland bileti uzatıyordu. Uzatmıyordu. Bana uzattığı şey, içinde üç tişört, bir diş fırçası ve "akıllı ol" bakışı olan bir valizdi.</p>
+<p>Dedemi bilirsiniz… Bilmezsiniz tabii, daha yeni tanışıyoruz. Dedem, yani <b>Fikri Usta</b>, mahallenin elektrikçisidir. Dükkânının kapısında kocaman bir tabela asılıdır:</p>
+<p class="konusma">"FİKRİ USTA — ELEKTRİK İŞLERİ.<br>Bozarsanız getirin, beraber üzülelim."</p>
+<p>Dükkânın içi başka bir gezegendir. Tavandan sarkan kablolar makarna gibi birbirine dolanmıştır. Raflarda sarı kafalı ampuller asker gibi dizilidir. Köşede de dedemin en kıymetlisi durur: kocaman, tahta kaplı, eski mi eski bir radyo. Adı <b>Behçet</b>. (Evet, radyonun adı var. Hayır, sormayın. Dedem "Behçet benim ilk müşterimdi" diyor, gerisini anlatmıyor.)</p>
+<p>Daha ilk gün dedem bana dükkân kurallarını okudu. Aynen yazıyorum:</p>
+<ul class="liste">
+<li><b>Kural 1:</b> Prize hiçbir şey sokulmaz. Parmak dahil. Çatal dahil. <i>Özellikle</i> çatal.</li>
+<li><b>Kural 2:</b> "Bilmiyorum" demek serbest. "Öğrenmek istemiyorum" demek yasak.</li>
+<li><b>Kural 3:</b> Çay tavşan kanı olacak. (Bunun elektrikle ilgisi yok ama dedem için Kural 1'den önemli.)</li>
+</ul>
+<p>İçimden "Bu, hayatımın en sıkıcı yazı olacak" dedim.</p>
+<p>Olmadı.</p>
+<p>Çünkü cumartesi akşamı, saat tam yedi kırk üçte, bütün mahallenin elektriği <b>güm</b> diye kesildi.</p>
+<span class="fisilti">— Ve benim staj hayatım da tam o saniye başladı. —</span>`,
+not:'Elektrikçiler bir devreyi onarmadan önce mutlaka enerjiyi keser ve yalıtkan ekipman kullanır. Fikri Usta\'nın 1. Kural\'ı boşuna değil: vücudumuz elektriği iletir!',
+soru:'Fikri Usta neden "özellikle çatal" diyor olabilir?',
+cevap:'Çatal metaldir, yani İLETKENDİR. Prize sokulursa elektrik çatal üzerinden vücudumuza geçer. Bu yüzden prizlere asla iletken cisim sokulmaz!'
+},
+{
+em:'🌑', baslik:'2. Karanlık Cumartesi',
+metin:`
+<p>Elektrik kesilince neler olur, biliyor musunuz? Ben artık biliyorum. Liste şöyle:</p>
+<ul class="liste">
+<li>Televizyondaki maç, tam penaltı atılırken kaybolur. (Amcalar bunu asla unutmaz.)</li>
+<li>Saadet Teyze'nin dizisi, tam "Aslında ben senin..." cümlesinde kesilir. (Teyzeler bunu <i>asla</i> affetmez.)</li>
+<li>Fırıncı Necmi Abi'nin hamuru, yarısı kabarmış hâlde ortada kalır. Necmi Abi de yarısı kabarmış hâlde sokağa fırlar.</li>
+</ul>
+<p>Beş dakika içinde bütün mahalle dedemin dükkânının önündeydi. Herkes aynı anda konuşuyordu. Dedem ise gayet sakin, elinde el feneri, Behçet'in düğmelerini kurcalıyordu.</p>
+<p class="konusma">"Fikri Usta, bu işte bir terslik var!" dedi Necmi Abi.<br>
+"Terslik değil," dedi dedem, "fizik var."<br>
+"Fizik kim?" diye sordum. Sormaz olaydım. Dedem bana öyle bir baktı ki o bakışla ampul yakılırdı.</p>
+<p>Dedem el fenerini çenesinin altına tuttu — korku filmi anlatacak gibi — ve mahalleye ilan etti:</p>
+<p class="konusma">"Fırtına yok. Rüzgâr yok. Trafo sapasağlam. Bu kesintinin sebebi bu mahallenin İÇİNDE. Ve ben onu bulacağım. Daha doğrusu…" — dramatik duraklama — "…<b>biz</b> bulacağız. Fıstık, yarın sabah sekizde dükkândasın. Elektrik dedektifliği stajın başlıyor. Maaş: günde iki limonata, sınırsız bilgi."</p>
+<p>Mahalleli alkışladı. Ben yutkundum. Saadet Teyze "Çocuk daha küçük, çarpılmasın?" dedi. Dedem cevap verdi:</p>
+<p class="konusma">"Çarpılmaz. Çünkü ilk dersimiz tam olarak bununla ilgili."</p>`,
+not:'Elektrik kesintilerinin nedeni bazen şebekede, bazen tek bir evdeki arızalı cihaz veya kablodadır. Sigortalar, tehlikeli durumlarda devreyi otomatik keserek bizi korur.',
+soru:'Kesinti saat hep 19.43\'te oluyorsa, dedektif Fıstık ilk neye bakmalı?',
+cevap:'O saatte mahallede NE değişiyor? Hangi cihaz o saatte çalışmaya başlıyor? Bilim insanları gibi dedektifler de önce düzenlilik (örüntü) arar!'
+},
+{
+em:'🥄', baslik:'3. İletkenler Ordusu',
+metin:`
+<p>Ertesi sabah dedem tezgâha şunları dizdi: bir pil, bir ampul, kablolar ve ucunda iki açık tel olan tuhaf bir düzenek.</p>
+<p class="konusma">"Buna <b>test devresi</b> denir," dedi. "Bu iki açık uca da <b>test uçları</b>. Ben bunlara 'devrenin bıyıkları' derim. Bıyıkların arasına bir madde koyarsın. Ampul yanarsa madde elektriği iletiyordur: <b>İLETKEN</b>. Yanmazsa iletmiyordur: <b>YALITKAN</b>."</p>
+<p>Sonra bana dükkânı işaret etti: "Buyur. Test et."</p>
+<p>O gün test ettiklerimin listesi (bilim için):</p>
+<ul class="liste">
+<li><b>Çay kaşığı:</b> Ampul yandı! Kaşık iletkenmiş. (Çayı karıştırmaktan başka yeteneği varmış yani.)</li>
+<li><b>Silgim:</b> Yanmadı. Yalıtkan. Silgim, elektrik karşısında da hatalarımı düzeltir gibi sessiz kaldı.</li>
+<li><b>Cam misket:</b> Yanmadı. Yalıtkan.</li>
+<li><b>Dedemin anahtarlığı:</b> Yandı. İletken. (Dedem "anahtarlarımı ısıtma" dedi.)</li>
+<li><b>Kedi Mıstık:</b> TEST EDİLMEDİ. Etik kurul (dedem) izin vermedi. Mıstık da zaten kuyruğuyla "olmaz" işareti yaptı.</li>
+</ul>
+<p>Sonra dedem iki bardak getirdi. Birine tuzlu su koydu, diğerine benim limonatamı. Evet, MAAŞIMI.</p>
+<p class="konusma">"Sıvılar da test edilir," dedi. Tuzlu suya batırdık: ampul yandı! Tuzlu su iletken. Limonataya batırdık… Ampul kıpırdamadı bile. "Şekerli sıvılar elektriği iletmez," dedi dedem. "Şekerli su yalıtkandır."</p>
+<p>"Yani limonatam fiziğe yenildi mi?" dedim.</p>
+<p class="konusma">"Hayır," dedi dedem, "limonatan göreve uygun değil. İç gitsin."</p>
+<p>İçtim. Görev tamamlandı.</p>
+<span class="fisilti">— Dedemin özeti: "Elektrik tembeldir Fıstık. Kolay yol bulursa akar. Yol verene iletken, yol vermeyene yalıtkan derler." —</span>`,
+not:'Metaller (bakır, demir, alüminyum…) katı iletkenlerdir. Tuzlu su, limon suyu ve sirke sıvı iletkenlere; şekerli su ve kolonya sıvı yalıtkanlara örnektir.',
+soru:'Necmi Abi\'nin fırınındaki metal hamur kazanı ile tahta ekmek küreğinden hangisi iletkendir?',
+cevap:'Metal kazan iletkendir, kuru tahta kürek yalıtkandır. Belki de bu yüzden fırıncılar tahta kürek kullanır — ısıya VE elektriğe karşı daha güvenli!'
+},
+{
+em:'🧤', baslik:'4. Yalıtkan Kahramanlar',
+metin:`
+<p>Salı günü dedem dolaptan bir çift kocaman lastik eldiven çıkardı. Eldivenler o kadar büyüktü ki ikisini de giysem içlerinde yüzebilirdim.</p>
+<p class="konusma">"Ben gençken elektrik direklerinde çalışırdım," dedi. "Bu eldivenler, lastik tabanlı botlar ve altımızdaki izole halı… Hepsi <b>yalıtkan</b>. Hepsi hayat kurtarır."</p>
+<p>"Yalıtkanlar elektriği iletemiyor diye üzülmüyor mu?" dedim. Şaka yapıyordum. Dedem ciddiye aldı:</p>
+<p class="konusma">"Üzülmek mi? Fıstık, yalıtkanlar elektrik dünyasının bodyguard'larıdır. İletkenler işi yapar, yalıtkanlar bizi korur. Kablonun içindeki bakır elektriği taşır; dışındaki plastik ise elektriğin SANA atlamasını engeller. Prizlerin plastik olması, fişlerin plastik olması, anahtarların plastik olması… Hep aynı sebep."</p>
+<p>Sonra bana pencereyi gösterdi. Dışarıda bulutlar toplanıyordu.</p>
+<p class="konusma">"Bak, hava da aslında yalıtkandır. Ama yıldırım düşerken o kadar büyük bir enerji oluşur ki hava bile pes eder, iletken hâle gelir. O yüzden fırtınada ağaç altına saklanılmaz, açık alanda dikilip 'buradayım' denmez."</p>
+<p>Tam o sırada Saadet Teyze çayını almaya geldi ve lafa girdi: "Ben zaten elektrik çarpmasın diye evde hep terlikle gezerim!"</p>
+<p>Dedemle bakıştık. Dedem, "Saadet Hanım…" dedi, "…bilimsel olarak gayet mantıklı." Saadet Teyze o gün dükkândan omuzları dimdik çıktı. Bir teyzenin fizikle gururlanışını ilk kez gördüm.</p>
+<p>Akşam dedem son kuralı ekledi: <b>Islak elle hiçbir düğmeye, hiçbir fişe dokunulmaz.</b> Çünkü su + insan = elektriğin en sevdiği kestirme yol.</p>`,
+not:'Elektrik teknisyenleri yalıtkan eldiven, bot, izole halı ve sehpa kullanır. Kabloların, prizlerin ve fişlerin dış yüzeyleri plastik/kauçuk gibi yalıtkanlarla kaplanır.',
+soru:'Hava yalıtkansa, yıldırım nasıl yere ulaşabiliyor?',
+cevap:'Yıldırım sırasındaki nem ve ÇOK yüksek elektrik enerjisi, normalde yalıtkan olan havayı geçici olarak iletken hâle getirir. Bu yüzden fırtınada açık alanlar ve ağaç altları tehlikelidir.'
+},
+{
+em:'🛣️', baslik:'5. Uzun İnce Bir Yoldayım',
+metin:`
+<p>Çarşamba sabahı dükkâna girdiğimde Behçet çalıyordu. (Behçet'in radyo olduğunu unutmadınız değil mi?) Hoparlöründen Aşık Veysel yükseliyordu:</p>
+<p class="konusma">🎵 "Uzun ince bir yoldayım, gidiyorum gündüz gece…" 🎵</p>
+<p class="konusma">"Bu türkü," dedi dedem, "aslında gizli bir fizik dersidir. Dinle: <b>uzun</b>… <b>ince</b>… bir yol. Elektronlar da yolcudur Fıstık. Yol uzadıkça yorulurlar. Yol inceldikçe sıkışırlar. Bu yorulup sıkışmanın adı: <b>ELEKTRİKSEL DİRENÇ</b>."</p>
+<p>Sonra tezgâha teller dizdi ve test devresini kurdu:</p>
+<ul class="liste">
+<li><b>Kısa tel taktık:</b> Ampul cayır cayır yandı. (Elektronlar: "Kestirmeden geldik!")</li>
+<li><b>Aynı telin uzununu taktık:</b> Ampul süt dökmüş kediye döndü. Işık var ama isteksiz.</li>
+<li><b>Kalın tel taktık:</b> Parıl parıl! (Geniş yol, rahat yolculuk.)</li>
+<li><b>İnce tel taktık:</b> Yine sönükleşti. (Tek şeritli yolda trafik.)</li>
+<li><b>Bakır yerine demir taktık:</b> Sönükleşti! Aynı boy, aynı kalınlık — ama telin CİNSİ değişince direnç de değişti.</li>
+</ul>
+<p>"Peki direnç hep kötü bir şey mi?" diye sordum. Dedem güldü, mutfaktan tost makinesini getirdi ve içini gösterdi: kıvrım kıvrım, kızıl bir tel.</p>
+<p class="konusma">"Bu, nikrom tel. Huysuz bir teldir; direnci çok büyüktür. Elektrik ondan geçerken o kadar zorlanır ki tel kıpkırmızı ısınır. O ısı da ekmeğini kızartır. Ampulün içindeki filaman da aynı oyunu oynar: direnç gösterir, ısınır, IŞIK saçar."</p>
+<p>"Yani tostumu fiziğe borçluyum," dedim.</p>
+<p class="konusma">"Tostunu bana borçlusun," dedi dedem, "fizik sadece aracı."</p>
+<p>Bir de şunu öğrendim: Gümüş, bakırdan bile iyi iletkenmiş. "Neden bütün kablolar gümüş değil o zaman?" dedim. Dedem hesap yaptı: "Gümüş kablo döşeseydik Necmi'nin tostu bin lira olurdu. Bakır hem iyi iletir hem cüzdan yakmaz."</p>`,
+not:'Direnç; telin UZUNLUĞU arttıkça artar, KALINLIĞI (dik kesit alanı) arttıkça azalır ve telin CİNSİNE göre değişir. Birimi ohm (Ω)\'dur. Isıtıcılardaki nikrom tel, direnci sayesinde ısı üretir.',
+soru:'Aynı cins ve kalınlıkta biri 10 cm, biri 40 cm iki telden hangisi ampulü daha parlak yakar?',
+cevap:'10 cm olan! Kısa telin direnci daha küçüktür; elektrik daha az zorlanır, ampul daha parlak yanar.'
+},
+{
+em:'📻', baslik:'6. Reosta Dayı',
+metin:`
+<p>Perşembe günü tarihî bir olay yaşandı: Dedem, Behçet'in ses düğmesini söktü. Mahalle tarihinde Behçet'e tornavida değdiği görülmemişti. Necmi Abi camdan baktı, Saadet Teyze kalp ilacını hazırladı.</p>
+<p class="konusma">"Korkmayın," dedi dedem, "ameliyat değil, ders." Düğmenin arkasından kıvrılmış bir tel ve onun üzerinde gezen küçük bir sürgü çıktı. "Tanıştırayım: <b>REOSTA</b>. Nâm-ı diğer ayarlanabilir direnç."</p>
+<p>Mantığı şöyleymiş, çok dikkatli dinledim çünkü dedem anlatırken tornavidayı bana doğrultuyordu:</p>
+<ul class="liste">
+<li>Sürgüyü bir yöne kaydırınca devreye giren tel <b>uzuyor</b> → direnç <b>artıyor</b> → Behçet'in sesi <b>kısılıyor</b>.</li>
+<li>Öbür yöne kaydırınca tel <b>kısalıyor</b> → direnç <b>azalıyor</b> → ses <b>açılıyor</b>.</li>
+</ul>
+<p>"Yani ben yıllardır sesi kısarken aslında elektronlara uzun yol mu yaptırıyormuşum?" dedim.</p>
+<p class="konusma">"Aynen öyle," dedi dedem. "Ütünün sıcaklık düğmesi, fırının ayarı, saç kurutma makinesinin kademesi, abajurun ışık ayarı… Hepsinin içinde aynı dayı oturur: Reosta Dayı."</p>
+<p>Bu arada itiraf: Dedem akşam türkü açınca sesi kısmayı denedim. Sürgü sonuna kadar gitti, ses bitmedi. Dedemin gençlik türkülerini kısabilecek reosta henüz icat edilmemiş.</p>
+<p>Dedem son olarak deftere kocaman bir işaret çizdi: <b>Ω</b></p>
+<p class="konusma">"Direncin birimi <b>ohm</b>'dur, işareti de budur. At nalına benzer. Adını George Simon Ohm'dan alır — direnci keşfeden adam. Bir şeyi keşfedersen sana da böyle harf verirler, çalış."</p>
+<span class="fisilti">— Hedefim belli: Fıstık işareti. Φ olabilir mesela. Çalışıyorum. —</span>`,
+not:'Reosta (değişken direnç), devredeki direnci ayarlamaya yarar. Sürgü, devreye giren telin uzunluğunu değiştirir. Eski radyoların ses düğmesi, ütü ve fırınların sıcaklık ayarı reosta ile çalışır.',
+soru:'Abajurun ışığını LOŞLAŞTIRMAK için reostanın direncini artırmak mı, azaltmak mı gerekir?',
+cevap:'Artırmak! Direnç artınca ampulden geçen elektrik enerjisi azalır ve ışık sönükleşir (loşlaşır).'
+},
+{
+em:'🕵️', baslik:'7. Esrarengiz Kaçak',
+metin:`
+<p>Cuma akşamı saat 19.40'ta dedemle pusudaydık. Elimde defter, dedemin elinde çay. Dedektifliğin yüzde doksanı beklemekmiş; kalan yüzde onu da çay demlemek.</p>
+<p>Saat 19.43… <b>GÜM.</b> Mahalle yine karanlığa gömüldü. Ama bu sefer hazırlıklıydık! Dedem saniyesinde ayağa kalktı: "Kesinti hep aynı dakikada. Demek ki birisi her akşam 19.43'te BİR ŞEY çalıştırıyor. Düşün Fıstık: o saatte ne değişir?"</p>
+<p>"Hava kararır!" dedim.</p>
+<p class="konusma">"Aferin. Hava kararınca insanlar ne yapar? Işık yakar, ısıtıcı açar… Akşam serinliği!"</p>
+<p>İz sürmeye çıktık. Sokak sokak gezdik. (Mıstık da geldi. Katkısı: sıfır. Havası: dedektif.) Sonunda apartmanın çatı katında ışığı yanıp sönen tek pencereyi bulduk: Nevin Teyze'nin penceresi.</p>
+<p>Nevin Teyze kapıyı açtı, dedemi görünce şaşırdı. İçeride gördüğümüz manzara şuydu: yepyeni, kocaman bir elektrikli ısıtıcı… ve ona bağlı, halının altından kıvrıla kıvrıla giden, makarna inceliğinde, UPUZUN bir uzatma kablosu. Kablonun halının altındaki kısmı sıcacıktı.</p>
+<p class="konusma">"İşte kaçağımız!" dedi dedem. "Nevin Hanım, bu ısıtıcı güçlü bir cihaz. Sen onu bu incecik ve upuzun kabloya bağlamışsın. İnce kablo demek BÜYÜK DİRENÇ demek. Uzun kablo demek DAHA DA BÜYÜK DİRENÇ demek. Kablo dayanamıyor, ısınıyor; sigorta da 'burada tehlike var' deyip bütün hattı kapatıyor. Sigorta attı, mahalle karıştı!"</p>
+<p>"Sigorta ne kadar vefasız," dedi Nevin Teyze.</p>
+<p class="konusma">"Vefasız değil, FEDAİ," dedi dedem. "Sigorta atmasaydı o kablo halının altında yangın çıkarabilirdi. Sigorta, evin gizli kahramanıdır: tehlikede kendini feda eder, devreyi keser."</p>
+<p>Dedem ısıtıcıyı duvardaki prize, kısa ve kalın bir kabloyla bağladı. O akşam saat 19.43'te bütün mahalle ışıl ışıldı. Pencerelerden alkış sesi geldi. Mıstık, hiçbir şey yapmamasına rağmen alkışın tamamını üstlendi.</p>`,
+not:'Güçlü cihazlar (ısıtıcı, fırın…) ince ve uzun uzatma kablolarına bağlanmamalıdır: kablonun direnci büyük olduğu için aşırı ısınır ve yangın riski oluşturur. Sigortalar bu tehlikede devreyi keserek bizi korur.',
+soru:'Nevin Teyze\'nin yeni kablosu neden "kısa ve kalın" seçildi?',
+cevap:'Kısa tel + kalın tel = KÜÇÜK direnç. Kablo zorlanmaz, ısınmaz, sigorta atmaz. (Uzunluk ↑ direnç ↑, kalınlık ↑ direnç ↓ — ünitenin özeti tek kabloda!)'
+},
+{
+em:'🍌', baslik:'8. Muzlu Piyano Şenliği',
+metin:`
+<p>Mahalleli o hafta sonu dedem için bir teşekkür şenliği düzenledi. Necmi Abi fırından çıkardığı tepsiyle geldi, Saadet Teyze "dizimi kaçırmama sebep olan kabloyu görmek istiyorum" dedi (kabloya küstü), Nevin Teyze de herkese kestane şekeri dağıttı.</p>
+<p>Benim de bir sürprizim vardı. Okuldan ödünç aldığım küçük bir kart: <b>MakeyMakey</b>. Dedemin dükkânından krokodil kablolar. Ve manavdan: beş muz.</p>
+<p>"Ne yapıyorsun?" dedi dedem, kaşları havada.</p>
+<p class="konusma">"Devre kuruyorum," dedim. "Bu kart, bilgisayara 'tuşa basıldı' sinyali gönderiyor. Ama tuş yerine MUZ bağlıyorum. Muz nemli, yani iletken. Ben de iletkenim. Toprak kablosunu tutup muza dokununca devre tamamlanıyor ve bilgisayar nota çalıyor!"</p>
+<p>İlk denemede "do" sesi çıktı. Saadet Teyze az kalsın bayılıyordu: "MUZ KONUŞTU!"</p>
+<p>"Konuşmadı Saadet Teyze, devre tamamlandı," dedim. Ama kimse dinlemedi, çünkü o sırada beş çocuk birden muz piyanosunda "Daha Dün Annemizin" çalmaya çalışıyordu. (Çalamadılar. Ama muzlar dayandı. Helal olsun muzlara.)</p>
+<p>Dedem yanıma geldi. Gözleri Behçet'in lambası gibi parlıyordu.</p>
+<p class="konusma">"Anlat bakalım stajyer. Bu nasıl çalışıyor?"<br>
+"Muz iletken. Ben iletkenim. Kablolar iletken. Devre kapanınca akım geçiyor. Yün eldivenle dokunsam çalışmazdı, çünkü yün yalıtkan."<br>
+"Peki sınavın son sorusu: seni en çok ne şaşırttı bu yaz?"<br>
+"Limonatanın yalıtkan olması," dedim. "Bir de… elektriğin aslında her yerde olması. Tostta, radyoda, yıldırımda, muzda."</p>
+<p>Dedem cebinden katlanmış bir kâğıt çıkardı. El yazısıyla yazılmıştı:</p>
+<p class="konusma">"Bu belge, Fıstık'ın (nâm-ı diğer Faruk) ELEKTRİK DEDEKTİFİ olduğunu onaylar. İmza: Fikri Usta. Not: Çatalı prize sokmadı, limonatayı bilime kurban etti, sigortanın kıymetini bildi."</p>
+<p>Valizime üç tişört, bir diş fırçası, bir avuç krokodil kablo ve bu sertifikayla döndüm. Annem "Nasıl geçti yaz?" diye sordu.</p>
+<p>"Aydınlatıcıydı," dedim.</p>
+<span class="fisilti">— Sen de mi dedektif olmak istiyorsun? O zaman ne duruyorsun: haritaya dön, istasyonları onar, Volta Şehri'ni aydınlat! —</span>`,
+not:'MakeyMakey, tıpkı Fikri Usta\'nın test devresi gibi çalışır: iletken bir nesneye (muz!) ve toprak kablosuna dokununca devre tamamlanır, bilgisayar bunu tuş basışı olarak algılar. Sen de sınıfta deneyebilirsin!',
+soru:'Muz piyanosu, eline yün eldiven takan birinde neden çalışmaz?',
+cevap:'Yün YALITKANDIR; devre eldivende kesilir, akım geçemez ve kart dokunuşu algılayamaz. Çıplak el (iletken!) gerekir.'
+}
+];
+
+let bolumIdx = 0, yon = 1;
+const okunan = new Set(JSON.parse(localStorage.getItem('em2-kitap-okunan') || '[]'));
+
+// içindekiler
+const liste = document.getElementById('icindekilerListe');
+BOLUMLER.forEach((b, i) => {
+  const btn = document.createElement('button');
+  btn.innerHTML = `<span class="b-em">${b.em}</span> ${b.baslik}`;
+  btn.id = 'ic-' + i;
+  if (okunan.has(i)) btn.classList.add('okundu');
+  btn.onclick = () => bolumAc(i);
+  liste.appendChild(btn);
+});
+
+// kaldığı yer
+const kayitliBolum = +localStorage.getItem('em2-kitap-bolum');
+if (okunan.size > 0 && kayitliBolum > 0 && kayitliBolum < BOLUMLER.length) {
+  document.getElementById('kaldigiYer').innerHTML =
+    `<button class="btn btn--secondary" style="margin-left:.6rem" onclick="bolumAc(${kayitliBolum})">🔖 Kaldığım Yerden (Bölüm ${kayitliBolum + 1})</button>`;
+}
+
+function bolumAc(i) {
+  bolumIdx = i;
+  document.getElementById('kapak').style.display = 'none';
+  document.getElementById('okuyucu').classList.add('acik');
+  bolumCiz();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function kapagaDon() {
+  document.getElementById('kapak').style.display = 'block';
+  document.getElementById('okuyucu').classList.remove('acik');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function bolumDegistir(d) {
+  yon = d;
+  const yeni = bolumIdx + d;
+  if (yeni < 0) return kapagaDon();
+  if (yeni >= BOLUMLER.length) return kitapBitti();
+  bolumIdx = yeni;
+  bolumCiz();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function bolumCiz() {
+  const b = BOLUMLER[bolumIdx];
+  okunan.add(bolumIdx);
+  localStorage.setItem('em2-kitap-okunan', JSON.stringify([...okunan]));
+  localStorage.setItem('em2-kitap-bolum', bolumIdx);
+  const ic = document.getElementById('ic-' + bolumIdx);
+  if (ic) ic.classList.add('okundu');
+
+  const sayfa = document.getElementById('sayfa');
+  sayfa.className = 'glass sayfa' + (yon < 0 ? ' geri' : '');
+  void sayfa.offsetWidth;
+  sayfa.innerHTML = `
+    <div class="b-gorsel">${b.em}</div>
+    <h2>${b.baslik}</h2>
+    <div class="metin">${b.metin}</div>
+    <div class="kenar-notu">🤖 <b>Volt'un Kenar Notu:</b> ${b.not}</div>
+    <div class="sira-sende">🎯 <b>Sıra Sende:</b> ${b.soru}
+      <br><button class="btn btn--secondary" onclick="this.nextElementSibling.classList.add('goster');this.style.display='none'">🔍 Cevabı Göster</button>
+      <div class="cevap">💡 ${b.cevap}</div>
+    </div>`;
+  document.getElementById('okumaSayac').textContent = `Bölüm ${bolumIdx + 1}/${BOLUMLER.length}`;
+  document.getElementById('okumaIlerleme').style.width = ((bolumIdx + 1) / BOLUMLER.length * 100) + '%';
+  document.getElementById('oncekiBtn').textContent = bolumIdx === 0 ? '◀ Kapak' : '◀ Önceki Bölüm';
+  document.getElementById('sonrakiBtn').textContent = bolumIdx === BOLUMLER.length - 1 ? 'Kitabı Bitir 🎉' : 'Sonraki Bölüm ▶';
+}
+function kitapBitti() {
+  localStorage.setItem('em2-kitap-bitti', '1');
+  const sayfa = document.getElementById('sayfa');
+  sayfa.className = 'glass sayfa';
+  void sayfa.offsetWidth;
+  sayfa.innerHTML = `
+    <div class="bitis">
+      <div style="font-size:3.6rem">📖🏅</div>
+      <h2>KİTAP KURDU ROZETİNİ KAZANDIN!</h2>
+      <p style="color:var(--muted);max-width:480px;margin:.6rem auto">
+        "Sigorta Attı, Mahalle Karıştı!"ı bitirdin. Artık sen de Fıstık gibi bir elektrik dedektifisin.
+        Fikri Usta'nın öğrettiklerini Volta Şehri'nde kanıtlamaya ne dersin?
+      </p>
+      <div style="display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap;margin-top:1rem">
+        <a class="btn btn--glow" href="index.html">⚡ Volta Şehri'ne Git</a>
+        <button class="btn btn--secondary" onclick="bolumAc(0)">📖 Baştan Oku</button>
+      </div>
+    </div>`;
+  document.getElementById('okumaIlerleme').style.width = '100%';
+  document.getElementById('okumaSayac').textContent = 'Bitti! 🎉';
+  konfeti();
+}
+function konfeti() {
+  const renkler = ['#f59e0b', '#6366f1', '#059669', '#be123c', '#ea580c'];
+  for (let i = 0; i < 90; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.left = Math.random() * 100 + 'vw';
+    c.style.background = renkler[i % renkler.length];
+    c.style.animationDuration = (1.6 + Math.random() * 2) + 's';
+    c.style.animationDelay = (Math.random() * .8) + 's';
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 4500);
+  }
+}
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('okuyucu').classList.contains('acik')) return;
+  if (e.key === 'ArrowRight') { e.preventDefault(); bolumDegistir(1); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); bolumDegistir(-1); }
+});
+</script>
+</body>
+</html>

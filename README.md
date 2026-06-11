@@ -13,6 +13,7 @@ MakeyMakey destekli ders paketi. ("Kraliçeyi Kurtarmak" tarzı macera-harita ya
 | Dosya | İçerik |
 |---|---|
 | `index.html` | Tek sayfalık macera uygulaması: giriş → Volta Şehri haritası → 5 istasyon → sertifika |
+| `kitap.html` | 📖 "Sigorta Attı, Mahalle Karıştı!" — üniteyle uyumlu 8 bölümlük interaktif hikâye kitabı (bölüm sonu soruları, okuma kaydı, Kitap Kurdu rozeti) |
 | `calisma-kagitlari/ck1-…3.html` | Yazdırılabilir 3 çalışma kağıdı (cevap anahtarlı) |
 | `ogretmen/ders-plani.html` | 8 ders saatlik 5E planı (Fen × BT işbirliği) |
 | `ogretmen/makey-makey.html` | 3 MakeyMakey görev kartı, Scratch tarifleri, rubrik, sorun giderme |
